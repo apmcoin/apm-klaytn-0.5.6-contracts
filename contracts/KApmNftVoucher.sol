@@ -28,7 +28,7 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
     mapping(string => bool) private _isUuidBlacklist;
     mapping(address => bool) private _isBlacklist;
     address public blacklistManager;
- 
+
     function redeemVoucher(
         uint256 id,
         uint256 _amount,
@@ -40,7 +40,17 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
         require(!isUuidBlacklist(_uuid), "Permission denied");
 
         _burn(msg.sender, id, _amount);
-        emit RedeemVoucher(id, _amount, _uuid, _vouchers[id].faceValue, _vouchers[id].currencyCode, _vouchers[id].expireAt, msg.sender);
+
+        emit RedeemVoucher(
+            id,
+            _amount,
+            _uuid,
+            _vouchers[id].voucherType,
+            _vouchers[id].faceValue,
+            _vouchers[id].currencyCode,
+            _vouchers[id].expireAt,
+            msg.sender
+            );
     }
 
     function setVoucherDetail(
@@ -64,7 +74,14 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
                 initialize : true
             });
 
-        emit SetVoucherDetail(id, _voucherType, _faceValue, _currencyCode, _expireAt, _redeemAvailable);
+        emit SetVoucherDetail(
+            id,
+            _voucherType,
+            _faceValue,
+            _currencyCode,
+            _expireAt,
+            _redeemAvailable
+            );
     }
 
     function setURI(string memory newuri) public onlyMinter {

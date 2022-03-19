@@ -21,21 +21,20 @@ contract IKApmNftVoucher is IKIP37 {
         uint256 indexed id,
         uint256 amount,
         string indexed _uuid,
+        string voucherType,
         uint256 faceValue,
         string currencyCode,
         uint256 expireAt,
         address indexed sender
         );
 
-    //uuid를 사용하여 오프체인 서비스로 바우처를 전송한다
+    //Transfer voucher to off-chain service using uuid
     function redeemVoucher(
         uint256 id,
         uint256 _amount,
         string calldata _uuid
     ) external;
-    /*
 
-    */
     function setVoucherDetail(
         uint256 id,
         uint256 _faceValue,
