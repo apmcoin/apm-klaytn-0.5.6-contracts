@@ -13,6 +13,22 @@ import * as Contracts from ".";
 declare module "hardhat/types/runtime" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
+      name: "IKApmCoin",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IKApmCoin__factory>;
+    getContractFactory(
+      name: "IKApmNftVoucher",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IKApmNftVoucher__factory>;
+    getContractFactory(
+      name: "KApmCoin",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.KApmCoin__factory>;
+    getContractFactory(
+      name: "KApmNftVoucher",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.KApmNftVoucher__factory>;
+    getContractFactory(
       name: "MinterRole",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.MinterRole__factory>;
@@ -285,6 +301,26 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.SampleNFT__factory>;
 
+    getContractAt(
+      name: "IKApmCoin",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IKApmCoin>;
+    getContractAt(
+      name: "IKApmNftVoucher",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IKApmNftVoucher>;
+    getContractAt(
+      name: "KApmCoin",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.KApmCoin>;
+    getContractAt(
+      name: "KApmNftVoucher",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.KApmNftVoucher>;
     getContractAt(
       name: "MinterRole",
       address: string,
