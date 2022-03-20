@@ -34,7 +34,7 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
         uint256 _amount,
         string calldata _uuid
     ) external {
-        require(_vouchers[id].initialize , "Unknown voucher detail");
+        require(_vouchers[id].initialize, "Unknown voucher detail");
         require(_vouchers[id].expireAt < now, "Expired voucher");
         require(_vouchers[id].redeemAvailable, "Not Available");
         require(!isUuidBlacklist(_uuid), "Permission denied");

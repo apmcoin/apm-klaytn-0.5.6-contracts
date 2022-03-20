@@ -11,7 +11,7 @@ contract IKApmNftVoucher is IKIP37 {
     event UnregisterUuidBlacklist(string indexed uuid);
     event SetVoucherDetail(
         uint256 indexed id,
-        string voucherType,
+        string indexed voucherType,
         uint256 faceValue,
         string currencyCode,
         uint256 expireAt,
