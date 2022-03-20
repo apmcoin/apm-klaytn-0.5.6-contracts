@@ -92,6 +92,7 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
         _uris[id] = newuri;
     }
 
+/*
     function mint(address to, uint256 id, uint256 value, bytes memory data) public {
         _mint(to, id, value, data);
     }
@@ -107,7 +108,7 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
     function burnBatch(address owner, uint256[] memory ids, uint256[] memory values) public {
         _burnBatch(owner, ids, values);
     }
-
+*/
     function setBlacklistManager(address _manager) external {
         require(msg.sender == blacklistManager || isOwner(), "Permission denied");
         blacklistManager = _manager;

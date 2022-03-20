@@ -17,7 +17,7 @@ import { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
 import { Listener, Provider } from "@ethersproject/providers";
 import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
-export interface IKApmNftVoucherInterface extends utils.Interface {
+export interface IKApmNftVoucherSaleInterface extends utils.Interface {
   functions: {
     "balanceOf(address,uint256)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
@@ -26,8 +26,8 @@ export interface IKApmNftVoucherInterface extends utils.Interface {
     "isBlacklist(address)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
     "isUuidBlacklist(string)": FunctionFragment;
+    "setVoucherDetail(uint256,uint256,string,uint256,bool)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
-    "setVoucherDetail(uint256,string,uint256,string,uint256,bool)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "safeTransferFrom(address,address,uint256,uint256,bytes)": FunctionFragment;
   };
@@ -58,12 +58,12 @@ export interface IKApmNftVoucherInterface extends utils.Interface {
     values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: "setApprovalForAll",
-    values: [string, boolean]
+    functionFragment: "setVoucherDetail",
+    values: [BigNumberish, BigNumberish, string, BigNumberish, boolean]
   ): string;
   encodeFunctionData(
-    functionFragment: "setVoucherDetail",
-    values: [BigNumberish, string, BigNumberish, string, BigNumberish, boolean]
+    functionFragment: "setApprovalForAll",
+    values: [string, boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "isApprovedForAll",
@@ -100,11 +100,11 @@ export interface IKApmNftVoucherInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setApprovalForAll",
+    functionFragment: "setVoucherDetail",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setVoucherDetail",
+    functionFragment: "setApprovalForAll",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -117,39 +117,37 @@ export interface IKApmNftVoucherInterface extends utils.Interface {
   ): Result;
 
   events: {
-    "SetBlacklistManager(address)": EventFragment;
+    "SetApmKrwPrice(address)": EventFragment;
     "RegisterBlacklist(address)": EventFragment;
     "UnregisterBlacklist(address)": EventFragment;
     "RegisterUuidBlacklist(string)": EventFragment;
     "UnregisterUuidBlacklist(string)": EventFragment;
     "SetVoucherDetail(uint256,string,uint256,string,uint256,bool)": EventFragment;
     "RedeemVoucher(uint256,uint256,string,string,uint256,string,uint256,address)": EventFragment;
+    "SetBlacklistManager(address)": EventFragment;
     "TransferSingle(address,address,address,uint256,uint256)": EventFragment;
     "TransferBatch(address,address,address,uint256[],uint256[])": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
     "URI(string,uint256)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "SetBlacklistManager"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SetApmKrwPrice"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RegisterBlacklist"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "UnregisterBlacklist"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RegisterUuidBlacklist"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "UnregisterUuidBlacklist"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "SetVoucherDetail"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RedeemVoucher"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SetBlacklistManager"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TransferSingle"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TransferBatch"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "URI"): EventFragment;
 }
 
-export type SetBlacklistManagerEvent = TypedEvent<
-  [string],
-  { account: string }
->;
+export type SetApmKrwPriceEvent = TypedEvent<[string], { account: string }>;
 
-export type SetBlacklistManagerEventFilter =
-  TypedEventFilter<SetBlacklistManagerEvent>;
+export type SetApmKrwPriceEventFilter = TypedEventFilter<SetApmKrwPriceEvent>;
 
 export type RegisterBlacklistEvent = TypedEvent<[string], { account: string }>;
 
@@ -208,6 +206,14 @@ export type RedeemVoucherEvent = TypedEvent<
 
 export type RedeemVoucherEventFilter = TypedEventFilter<RedeemVoucherEvent>;
 
+export type SetBlacklistManagerEvent = TypedEvent<
+  [string],
+  { account: string }
+>;
+
+export type SetBlacklistManagerEventFilter =
+  TypedEventFilter<SetBlacklistManagerEvent>;
+
 export type TransferSingleEvent = TypedEvent<
   [string, string, string, BigNumber, BigNumber],
   {
@@ -248,12 +254,12 @@ export type URIEvent = TypedEvent<
 
 export type URIEventFilter = TypedEventFilter<URIEvent>;
 
-export interface IKApmNftVoucher extends BaseContract {
+export interface IKApmNftVoucherSale extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: IKApmNftVoucherInterface;
+  interface: IKApmNftVoucherSaleInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -315,19 +321,28 @@ export interface IKApmNftVoucher extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    setApprovalForAll(
-      operator: string,
-      approved: boolean,
+    "setVoucherDetail(uint256,uint256,string,uint256,bool)"(
+      id: BigNumberish,
+      _faceValue: BigNumberish,
+      _currencyCode: string,
+      _expireAt: BigNumberish,
+      _redeemAvailable: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    setVoucherDetail(
+    "setVoucherDetail(uint256,string,uint256,string,uint256,bool)"(
       id: BigNumberish,
       _voucherType: string,
       _faceValue: BigNumberish,
       _currencyCode: string,
       _expireAt: BigNumberish,
       _redeemAvailable: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    setApprovalForAll(
+      operator: string,
+      approved: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -384,19 +399,28 @@ export interface IKApmNftVoucher extends BaseContract {
 
   isUuidBlacklist(uuid: string, overrides?: CallOverrides): Promise<boolean>;
 
-  setApprovalForAll(
-    operator: string,
-    approved: boolean,
+  "setVoucherDetail(uint256,uint256,string,uint256,bool)"(
+    id: BigNumberish,
+    _faceValue: BigNumberish,
+    _currencyCode: string,
+    _expireAt: BigNumberish,
+    _redeemAvailable: boolean,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  setVoucherDetail(
+  "setVoucherDetail(uint256,string,uint256,string,uint256,bool)"(
     id: BigNumberish,
     _voucherType: string,
     _faceValue: BigNumberish,
     _currencyCode: string,
     _expireAt: BigNumberish,
     _redeemAvailable: boolean,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setApprovalForAll(
+    operator: string,
+    approved: boolean,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -453,19 +477,28 @@ export interface IKApmNftVoucher extends BaseContract {
 
     isUuidBlacklist(uuid: string, overrides?: CallOverrides): Promise<boolean>;
 
-    setApprovalForAll(
-      operator: string,
-      approved: boolean,
+    "setVoucherDetail(uint256,uint256,string,uint256,bool)"(
+      id: BigNumberish,
+      _faceValue: BigNumberish,
+      _currencyCode: string,
+      _expireAt: BigNumberish,
+      _redeemAvailable: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setVoucherDetail(
+    "setVoucherDetail(uint256,string,uint256,string,uint256,bool)"(
       id: BigNumberish,
       _voucherType: string,
       _faceValue: BigNumberish,
       _currencyCode: string,
       _expireAt: BigNumberish,
       _redeemAvailable: boolean,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setApprovalForAll(
+      operator: string,
+      approved: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -486,12 +519,10 @@ export interface IKApmNftVoucher extends BaseContract {
   };
 
   filters: {
-    "SetBlacklistManager(address)"(
+    "SetApmKrwPrice(address)"(
       account?: string | null
-    ): SetBlacklistManagerEventFilter;
-    SetBlacklistManager(
-      account?: string | null
-    ): SetBlacklistManagerEventFilter;
+    ): SetApmKrwPriceEventFilter;
+    SetApmKrwPrice(account?: string | null): SetApmKrwPriceEventFilter;
 
     "RegisterBlacklist(address)"(
       account?: string | null
@@ -556,6 +587,13 @@ export interface IKApmNftVoucher extends BaseContract {
       expireAt?: null,
       sender?: string | null
     ): RedeemVoucherEventFilter;
+
+    "SetBlacklistManager(address)"(
+      account?: string | null
+    ): SetBlacklistManagerEventFilter;
+    SetBlacklistManager(
+      account?: string | null
+    ): SetBlacklistManagerEventFilter;
 
     "TransferSingle(address,address,address,uint256,uint256)"(
       operator?: string | null,
@@ -646,19 +684,28 @@ export interface IKApmNftVoucher extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    setApprovalForAll(
-      operator: string,
-      approved: boolean,
+    "setVoucherDetail(uint256,uint256,string,uint256,bool)"(
+      id: BigNumberish,
+      _faceValue: BigNumberish,
+      _currencyCode: string,
+      _expireAt: BigNumberish,
+      _redeemAvailable: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    setVoucherDetail(
+    "setVoucherDetail(uint256,string,uint256,string,uint256,bool)"(
       id: BigNumberish,
       _voucherType: string,
       _faceValue: BigNumberish,
       _currencyCode: string,
       _expireAt: BigNumberish,
       _redeemAvailable: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    setApprovalForAll(
+      operator: string,
+      approved: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -722,19 +769,28 @@ export interface IKApmNftVoucher extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    setApprovalForAll(
-      operator: string,
-      approved: boolean,
+    "setVoucherDetail(uint256,uint256,string,uint256,bool)"(
+      id: BigNumberish,
+      _faceValue: BigNumberish,
+      _currencyCode: string,
+      _expireAt: BigNumberish,
+      _redeemAvailable: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    setVoucherDetail(
+    "setVoucherDetail(uint256,string,uint256,string,uint256,bool)"(
       id: BigNumberish,
       _voucherType: string,
       _faceValue: BigNumberish,
       _currencyCode: string,
       _expireAt: BigNumberish,
       _redeemAvailable: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setApprovalForAll(
+      operator: string,
+      approved: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 

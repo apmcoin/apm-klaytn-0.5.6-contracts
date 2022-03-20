@@ -37,6 +37,7 @@ contract IKApmNftVoucher is IKIP37 {
 
     function setVoucherDetail(
         uint256 id,
+        string calldata _voucherType,
         uint256 _faceValue,
         string calldata _currencyCode,
         uint256 _expireAt,

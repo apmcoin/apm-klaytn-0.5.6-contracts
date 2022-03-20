@@ -3,6 +3,7 @@
 /* eslint-disable */
 export type { IKApmCoin } from "./IKApmCoin";
 export type { IKApmNftVoucher } from "./IKApmNftVoucher";
+export type { IKApmNftVoucherSale } from "./IKApmNftVoucherSale";
 export type { KApmCoin } from "./KApmCoin";
 export type { KApmNftVoucher } from "./KApmNftVoucher";
 export type { MinterRole } from "./MinterRole";
@@ -76,6 +77,7 @@ export type { SampleNFT } from "./SampleNFT";
 
 export { IKApmCoin__factory } from "./factories/IKApmCoin__factory";
 export { IKApmNftVoucher__factory } from "./factories/IKApmNftVoucher__factory";
+export { IKApmNftVoucherSale__factory } from "./factories/IKApmNftVoucherSale__factory";
 export { KApmCoin__factory } from "./factories/KApmCoin__factory";
 export { KApmNftVoucher__factory } from "./factories/KApmNftVoucher__factory";
 export { MinterRole__factory } from "./factories/MinterRole__factory";

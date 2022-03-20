@@ -13,4 +13,13 @@ npx hardhat compile
 npx hardhat test
 ```
 
+## NFT Voucher
+contracts/KApmNftVoucher.sol
+
+**Issuing New Voucher**
+1. `create()` a new KIP-37 NFT
+2. `setVoucherDetail()` to the created NFT
+
+**Issuing New Voucher**
+1. `mint()`
 

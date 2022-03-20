@@ -5,9 +5,9 @@
 import { Contract, Signer, utils } from "ethers";
 import { Provider } from "@ethersproject/providers";
 import type {
-  IKApmNftVoucher,
-  IKApmNftVoucherInterface,
-} from "../IKApmNftVoucher";
+  IKApmNftVoucherSale,
+  IKApmNftVoucherSaleInterface,
+} from "../IKApmNftVoucherSale";
 
 const _abi = [
   {
@@ -169,6 +169,36 @@ const _abi = [
     constant: false,
     inputs: [
       {
+        name: "id",
+        type: "uint256",
+      },
+      {
+        name: "_faceValue",
+        type: "uint256",
+      },
+      {
+        name: "_currencyCode",
+        type: "string",
+      },
+      {
+        name: "_expireAt",
+        type: "uint256",
+      },
+      {
+        name: "_redeemAvailable",
+        type: "bool",
+      },
+    ],
+    name: "setVoucherDetail",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    constant: false,
+    inputs: [
+      {
         name: "operator",
         type: "address",
       },
@@ -279,7 +309,7 @@ const _abi = [
         type: "address",
       },
     ],
-    name: "SetBlacklistManager",
+    name: "SetApmKrwPrice",
     type: "event",
   },
   {
@@ -419,6 +449,18 @@ const _abi = [
     inputs: [
       {
         indexed: true,
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "SetBlacklistManager",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
         name: "operator",
         type: "address",
       },
@@ -519,15 +561,15 @@ const _abi = [
   },
 ];
 
-export class IKApmNftVoucher__factory {
+export class IKApmNftVoucherSale__factory {
   static readonly abi = _abi;
-  static createInterface(): IKApmNftVoucherInterface {
-    return new utils.Interface(_abi) as IKApmNftVoucherInterface;
+  static createInterface(): IKApmNftVoucherSaleInterface {
+    return new utils.Interface(_abi) as IKApmNftVoucherSaleInterface;
   }
   static connect(
     address: string,
     signerOrProvider: Signer | Provider
-  ): IKApmNftVoucher {
-    return new Contract(address, _abi, signerOrProvider) as IKApmNftVoucher;
+  ): IKApmNftVoucherSale {
+    return new Contract(address, _abi, signerOrProvider) as IKApmNftVoucherSale;
   }
 }
