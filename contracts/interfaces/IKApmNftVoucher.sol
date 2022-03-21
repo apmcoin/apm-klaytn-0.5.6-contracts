@@ -11,7 +11,10 @@ contract IKApmNftVoucher is IKIP37 {
     event UnregisterUuidBlacklist(string indexed uuid);
     event SetVoucherDetail(
         uint256 indexed id,
+        string title,
+        string description,
         string indexed voucherType,
+        uint256 indexed voucherFormatId,
         uint256 faceValue,
         string currencyCode,
         uint256 expireAt,
@@ -20,8 +23,11 @@ contract IKApmNftVoucher is IKIP37 {
     event RedeemVoucher(
         uint256 indexed id,
         uint256 amount,
-        string indexed _uuid,
+        string indexed userUuid,
+        string title,
+        string description,
         string voucherType,
+        uint256 voucherFormatId,
         uint256 faceValue,
         string currencyCode,
         uint256 expireAt,
@@ -31,17 +37,20 @@ contract IKApmNftVoucher is IKIP37 {
     //Transfer voucher to off-chain service using uuid
     function redeemVoucher(
         uint256 id,
-        uint256 _amount,
-        string calldata _uuid
+        uint256 amount,
+        string calldata userUuid
     ) external;
 
     function setVoucherDetail(
         uint256 id,
-        string calldata _voucherType,
-        uint256 _faceValue,
-        string calldata _currencyCode,
-        uint256 _expireAt,
-        bool _redeemAvailable
+        string calldata title,
+        string calldata description,
+        string calldata voucherType,
+        uint256 voucherFormatId,
+        uint256 faceValue,
+        string calldata currencyCode,
+        uint256 expireAt,
+        bool redeemAvailable
     ) external;
     function isBlacklist(address account) public view returns (bool);
     function isUuidBlacklist(string memory uuid) public view returns (bool);

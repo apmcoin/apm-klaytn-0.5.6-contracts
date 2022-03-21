@@ -16,7 +16,10 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
     }
 
     struct Voucher{
-        string voucherType; // event, digital, etc.,
+        string title;
+        string description;
+        string voucherType; // for metadata image. event, digital, etc.,
+        uint256 voucherFormatId;
         uint256 faceValue; // 10000
         string currencyCode; // KRW
         uint256 expireAt; // utc+0 timestamp
@@ -32,20 +35,23 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
     function redeemVoucher(
         uint256 id,
         uint256 _amount,
-        string calldata _uuid
+        string calldata _userUuid
     ) external {
         require(_vouchers[id].initialize, "Unknown voucher detail");
         require(_vouchers[id].expireAt < now, "Expired voucher");
         require(_vouchers[id].redeemAvailable, "Not Available");
-        require(!isUuidBlacklist(_uuid), "Permission denied");
+        require(!isUuidBlacklist(_userUuid), "Permission denied");
 
         _burn(msg.sender, id, _amount);
 
         emit RedeemVoucher(
             id,
             _amount,
-            _uuid,
+            _userUuid,
+            _vouchers[id].title,
+            _vouchers[id].description,
             _vouchers[id].voucherType,
+            _vouchers[id].voucherFormatId,
             _vouchers[id].faceValue,
             _vouchers[id].currencyCode,
             _vouchers[id].expireAt,
@@ -55,32 +61,41 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
 
     function setVoucherDetail(
         uint256 id,
-        string calldata _voucherType,
-        uint256 _faceValue,
-        string calldata _currencyCode,
-        uint256 _expireAt,
-        bool _redeemAvailable
+        string calldata title,
+        string calldata description,
+        string calldata voucherType,
+        uint256 voucherFormatId,
+        uint256 faceValue,
+        string calldata currencyCode,
+        uint256 expireAt,
+        bool redeemAvailable
     ) external onlyMinter {
         require(_exists(id), "Do token create first.");
-        require(bytes(_currencyCode).length > 0, "Currency code required");
-        require(_expireAt > now, "The expiration date is before the current time.");
+        require(bytes(currencyCode).length > 0, "Currency code required");
+        require(expireAt > now, "The expiration date is before the current time.");
 
         _vouchers[id] = Voucher({
-                voucherType : _voucherType,
-                faceValue : _faceValue,
-                currencyCode : _currencyCode,
-                expireAt : _expireAt,
-                redeemAvailable : _redeemAvailable,
+                title : title,
+                description : description,
+                voucherType : voucherType,
+                voucherFormatId : voucherFormatId,
+                faceValue : faceValue,
+                currencyCode : currencyCode,
+                expireAt : expireAt,
+                redeemAvailable : redeemAvailable,
                 initialize : true
             });
-
+        
         emit SetVoucherDetail(
             id,
-            _voucherType,
-            _faceValue,
-            _currencyCode,
-            _expireAt,
-            _redeemAvailable
+            title,
+            description,
+            voucherType,
+            voucherFormatId,
+            faceValue,
+            currencyCode,
+            expireAt,
+            redeemAvailable
             );
     }
 
@@ -92,23 +107,6 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
         _uris[id] = newuri;
     }
 
-/*
-    function mint(address to, uint256 id, uint256 value, bytes memory data) public {
-        _mint(to, id, value, data);
-    }
-
-    function mintBatch(address to, uint256[] memory ids, uint256[] memory values, bytes memory data) public {
-        _mintBatch(to, ids, values, data);
-    }
-
-    function burn(address owner, uint256 id, uint256 value) public {
-        _burn(owner, id, value);
-    }
-
-    function burnBatch(address owner, uint256[] memory ids, uint256[] memory values) public {
-        _burnBatch(owner, ids, values);
-    }
-*/
     function setBlacklistManager(address _manager) external {
         require(msg.sender == blacklistManager || isOwner(), "Permission denied");
         blacklistManager = _manager;
