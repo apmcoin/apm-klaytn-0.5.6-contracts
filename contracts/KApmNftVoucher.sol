@@ -15,6 +15,7 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
         // solhint-disable-previous-line no-empty-blocks
     }
 
+    //On-chain metadata stauct
     struct Voucher{
         string title;
         string description;
@@ -34,20 +35,20 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
 
     function redeemVoucher(
         uint256 id,
-        uint256 _amount,
-        string calldata _userUuid
+        uint256 amount, //EA, not the sum of faceValue
+        string calldata userUuid
     ) external {
         require(_vouchers[id].initialize, "Unknown voucher detail");
         require(_vouchers[id].expireAt < now, "Expired voucher");
         require(_vouchers[id].redeemAvailable, "Not Available");
-        require(!isUuidBlacklist(_userUuid), "Permission denied");
+        require(!isUuidBlacklist(userUuid), "Permission denied");
 
-        _burn(msg.sender, id, _amount);
+        _burn(msg.sender, id, amount);
 
         emit RedeemVoucher(
             id,
-            _amount,
-            _userUuid,
+            amount,
+            userUuid,
             _vouchers[id].title,
             _vouchers[id].description,
             _vouchers[id].voucherType,

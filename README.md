@@ -13,13 +13,24 @@ npx hardhat compile
 npx hardhat test
 ```
 
-## NFT Voucher
-contracts/KApmNftVoucher.sol
+## KIP-7 apM Coin
+apM Token for Klaytn Mainnet
+Code : `contracts/KApmNftCoin.sol`
+Mainnet :
 
-**Issuing New Voucher**
+## KIP-37 NFT Voucher
+KIP37 standard NFT Voucher with on-chain metadata that can be transmitted to off-chain services.
+Code : `contracts/KApmNftVoucher.sol`
+Mainnet:
+
+
+**Minting New Voucher type**
 1. `create()` a new KIP-37 NFT
 2. `setVoucherDetail()` to the created NFT
 
-**Issuing New Voucher**
+**Minting Additional Voucher**
 1. `mint()`
+
+**Transfer as an off-chain service**
+1. `redeemVoucher()`
 
