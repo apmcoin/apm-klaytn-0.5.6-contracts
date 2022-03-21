@@ -14,14 +14,15 @@ npx hardhat test
 ```
 
 ## KIP-7 apM Coin
-apM Token for Klaytn Mainnet
-Code : `contracts/KApmNftCoin.sol`
-Mainnet :
+* apM Token for Klaytn Mainnet
+Code : `contracts/KApmNftCoin.sol`  
+Mainnet :  
+
 
 ## KIP-37 NFT Voucher
-KIP37 standard NFT Voucher with on-chain metadata that can be transmitted to off-chain services.
-Code : `contracts/KApmNftVoucher.sol`
-Mainnet:
+* KIP37 standard NFT Voucher with on-chain metadata that can be transmitted to off-chain services.
+Code : `contracts/KApmNftVoucher.sol`  
+Mainnet:  
 
 
 **Minting New Voucher type**
