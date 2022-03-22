@@ -4,8 +4,8 @@ import "./interfaces/IKApmCoin.sol";
 import "./klaytn-contracts/ownership/Ownable.sol";
 import "./klaytn-contracts/token/KIP7/KIP7Token.sol";
 
-contract KApmCoin is Ownable, KIP7Token, IKApmCoin {
-    constructor() public KIP7Token("apM Coin", "APM", 18, 0) {
+contract KBpmCoin is Ownable, KIP7Token, IKApmCoin {
+    constructor() public KIP7Token("bpM Coin", "BPM", 18, 0) {
         // solhint-disable-previous-line no-empty-blocks
     }
 
