@@ -47,6 +47,10 @@ contract KApmCoin is Ownable, KIP7Token, IKApmCoin {
         return super._mint(account, amount);
     }
 
+    function removeMinter(address account) public onlyOwner {
+        _removeMinter(account);
+    }
+
     function claimTokens(address _token) public onlyOwner {
         IKIP7 token = IKIP7(_token);
         uint256 claimedBalance = token.balanceOf(address(this));
