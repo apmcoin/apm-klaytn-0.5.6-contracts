@@ -1,0 +1,13 @@
+{
+    "name":"bpM Digital Voucher",
+    "description":"TEST NFT Voucher for apM Wholesale Market",
+    "image":"https://s3.ap-northeast-2.amazonaws.com/cdn.apm-coin.com/nft-voucher/nftvoucher-test-digital.png",
+    "attributes":[
+        {"trait_type":"voucherType","value":"digital"},
+        {"trait_type":"voucherFormatId","value":"0"},
+        {"trait_type":"faceValue","value":"10000"},
+        {"trait_type":"currencyCode","value":"KRW"},
+        {"trait_type":"expireAt","value":"2121792591"},
+        {"trait_type":"redeemAvailable","value":"True"}
+    ]
+}
