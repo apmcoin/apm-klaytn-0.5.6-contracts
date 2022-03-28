@@ -124,6 +124,52 @@ const _abi = [
     type: "function",
   },
   {
+    constant: false,
+    inputs: [
+      {
+        name: "id",
+        type: "uint256",
+      },
+      {
+        name: "title",
+        type: "string",
+      },
+      {
+        name: "description",
+        type: "string",
+      },
+      {
+        name: "voucherType",
+        type: "string",
+      },
+      {
+        name: "voucherFormatId",
+        type: "uint256",
+      },
+      {
+        name: "faceValue",
+        type: "uint256",
+      },
+      {
+        name: "currencyCode",
+        type: "string",
+      },
+      {
+        name: "expireAt",
+        type: "uint256",
+      },
+      {
+        name: "redeemAvailable",
+        type: "bool",
+      },
+    ],
+    name: "setVoucherDetail",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     constant: true,
     inputs: [
       {
@@ -208,40 +254,6 @@ const _abi = [
       },
     ],
     name: "setApprovalForAll",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    constant: false,
-    inputs: [
-      {
-        name: "id",
-        type: "uint256",
-      },
-      {
-        name: "_voucherType",
-        type: "string",
-      },
-      {
-        name: "_faceValue",
-        type: "uint256",
-      },
-      {
-        name: "_currencyCode",
-        type: "string",
-      },
-      {
-        name: "_expireAt",
-        type: "uint256",
-      },
-      {
-        name: "_redeemAvailable",
-        type: "bool",
-      },
-    ],
-    name: "setVoucherDetail",
     outputs: [],
     payable: false,
     stateMutability: "nonpayable",
@@ -369,9 +381,24 @@ const _abi = [
         type: "uint256",
       },
       {
+        indexed: false,
+        name: "name",
+        type: "string",
+      },
+      {
+        indexed: false,
+        name: "description",
+        type: "string",
+      },
+      {
         indexed: true,
         name: "voucherType",
         type: "string",
+      },
+      {
+        indexed: true,
+        name: "voucherFormatId",
+        type: "uint256",
       },
       {
         indexed: false,
@@ -412,13 +439,28 @@ const _abi = [
       },
       {
         indexed: true,
-        name: "_uuid",
+        name: "userUuid",
+        type: "string",
+      },
+      {
+        indexed: false,
+        name: "name",
+        type: "string",
+      },
+      {
+        indexed: false,
+        name: "description",
         type: "string",
       },
       {
         indexed: false,
         name: "voucherType",
         type: "string",
+      },
+      {
+        indexed: false,
+        name: "voucherFormatId",
+        type: "uint256",
       },
       {
         indexed: false,
@@ -454,6 +496,58 @@ const _abi = [
       },
     ],
     name: "SetBlacklistManager",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: "id",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        name: "amount",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        name: "userUuid",
+        type: "string",
+      },
+      {
+        indexed: false,
+        name: "voucherType",
+        type: "string",
+      },
+      {
+        indexed: false,
+        name: "voucherFormatId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        name: "faceValue",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        name: "currencyCode",
+        type: "string",
+      },
+      {
+        indexed: false,
+        name: "expireAt",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        name: "sender",
+        type: "address",
+      },
+    ],
+    name: "RedeemVoucher",
     type: "event",
   },
   {

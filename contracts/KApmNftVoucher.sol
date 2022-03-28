@@ -17,7 +17,7 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
 
     //On-chain metadata stauct
     struct Voucher{
-        string title;
+        string name;
         string description;
         string voucherType; // for metadata image. event, digital, etc.,
         uint256 voucherFormatId;
@@ -49,8 +49,6 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
             id,
             amount,
             userUuid,
-            _vouchers[id].title,
-            _vouchers[id].description,
             _vouchers[id].voucherType,
             _vouchers[id].voucherFormatId,
             _vouchers[id].faceValue,
@@ -62,7 +60,7 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
 
     function setVoucherDetail(
         uint256 id,
-        string calldata title,
+        string calldata name,
         string calldata description,
         string calldata voucherType,
         uint256 voucherFormatId,
@@ -76,7 +74,7 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
         require(expireAt > now, "The expiration date is before the current time.");
 
         _vouchers[id] = Voucher({
-                title : title,
+                name : name,
                 description : description,
                 voucherType : voucherType,
                 voucherFormatId : voucherFormatId,
@@ -89,7 +87,7 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
         
         emit SetVoucherDetail(
             id,
-            title,
+            name,
             description,
             voucherType,
             voucherFormatId,
@@ -98,6 +96,10 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
             expireAt,
             redeemAvailable
             );
+    }
+
+    function removeMinter(address account) public onlyOwner {
+        _removeMinter(account);
     }
 
     function setURI(string memory newuri) public onlyMinter {

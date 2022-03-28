@@ -33,6 +33,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.KApmNftVoucher__factory>;
     getContractFactory(
+      name: "KBpmCoin",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.KBpmCoin__factory>;
+    getContractFactory(
       name: "MinterRole",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.MinterRole__factory>;
@@ -330,6 +334,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.KApmNftVoucher>;
+    getContractAt(
+      name: "KBpmCoin",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.KBpmCoin>;
     getContractAt(
       name: "MinterRole",
       address: string,

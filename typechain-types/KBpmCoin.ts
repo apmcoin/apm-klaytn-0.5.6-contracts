@@ -17,14 +17,13 @@ import { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
 import { Listener, Provider } from "@ethersproject/providers";
 import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
-export interface KApmCoinInterface extends utils.Interface {
+export interface KBpmCoinInterface extends utils.Interface {
   functions: {
     "supportsInterface(bytes4)": FunctionFragment;
     "name()": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
-    "removeMinter(address)": FunctionFragment;
     "decimals()": FunctionFragment;
     "isBlacklist(address)": FunctionFragment;
     "unpause()": FunctionFragment;
@@ -72,10 +71,6 @@ export interface KApmCoinInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "transferFrom",
     values: [string, string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "removeMinter",
-    values: [string]
   ): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
   encodeFunctionData(functionFragment: "isBlacklist", values: [string]): string;
@@ -161,10 +156,6 @@ export interface KApmCoinInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "transferFrom",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "removeMinter",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
@@ -338,12 +329,12 @@ export type OwnershipTransferredEvent = TypedEvent<
 export type OwnershipTransferredEventFilter =
   TypedEventFilter<OwnershipTransferredEvent>;
 
-export interface KApmCoin extends BaseContract {
+export interface KBpmCoin extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: KApmCoinInterface;
+  interface: KBpmCoinInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -384,11 +375,6 @@ export interface KApmCoin extends BaseContract {
       from: string,
       to: string,
       value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    removeMinter(
-      account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -547,11 +533,6 @@ export interface KApmCoin extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  removeMinter(
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
   decimals(overrides?: CallOverrides): Promise<number>;
 
   isBlacklist(account: string, overrides?: CallOverrides): Promise<boolean>;
@@ -706,8 +687,6 @@ export interface KApmCoin extends BaseContract {
       value: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
-
-    removeMinter(account: string, overrides?: CallOverrides): Promise<void>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
@@ -924,11 +903,6 @@ export interface KApmCoin extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    removeMinter(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     isBlacklist(account: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -1082,11 +1056,6 @@ export interface KApmCoin extends BaseContract {
       from: string,
       to: string,
       value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    removeMinter(
-      account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
