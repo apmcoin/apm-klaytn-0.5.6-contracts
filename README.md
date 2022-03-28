@@ -29,22 +29,22 @@ Mainnet:
 ```
     //Create New KIP-37 NFT Type
     create(
-        0, // id
-        10000, //initialSupply
-        "endpoint" //uri
+        0,          // id
+        10000,      //initialSupply
+        "endpoint"  //uri
     );
         
     //Update ON-Chain metadata
     setVoucherDetail(    
-        0, //id
-        "apM e-Voucher", //name
+        0,                  //id
+        "apM e-Voucher",    //name
         "apM NFT Voucher powered by FOMO Tech", //description
-        "e-Voucher", //type
-        0, //voucherFormatId
-        10000, //faceValue
-        "KRW", //currencyCode
-        2121792591, //expireAt
-        true //redeemAvailable
+        "e-Voucher",        //type
+        0,                  //voucherFormatId
+        10000,              //faceValue
+        "KRW",              //currencyCode
+        2121792591,         //expireAt
+        true                //redeemAvailable
     );
       
 ```
