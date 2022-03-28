@@ -19,7 +19,7 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
     struct Voucher{
         string name;
         string description;
-        string voucherType; // for metadata image. event, digital, etc.,
+        string voucherType; // Readerble type. Event Voucher, e-Voucher ..
         uint256 voucherFormatId;
         uint256 faceValue; // 10000
         string currencyCode; // KRW
