@@ -503,7 +503,12 @@ const _abi = [
     inputs: [
       {
         indexed: true,
-        name: "id",
+        name: "redeemId",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        name: "tokenId",
         type: "uint256",
       },
       {
@@ -542,7 +547,7 @@ const _abi = [
         type: "uint256",
       },
       {
-        indexed: true,
+        indexed: false,
         name: "sender",
         type: "address",
       },

@@ -133,7 +133,7 @@ export interface IKApmNftVoucherInterface extends utils.Interface {
     "RegisterUuidBlacklist(string)": EventFragment;
     "UnregisterUuidBlacklist(string)": EventFragment;
     "SetVoucherDetail(uint256,string,string,string,uint256,uint256,string,uint256,bool)": EventFragment;
-    "RedeemVoucher(uint256,uint256,string,string,uint256,uint256,string,uint256,address)": EventFragment;
+    "RedeemVoucher(uint256,uint256,uint256,string,string,uint256,uint256,string,uint256,address)": EventFragment;
     "TransferSingle(address,address,address,uint256,uint256)": EventFragment;
     "TransferBatch(address,address,address,uint256[],uint256[])": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
@@ -219,6 +219,7 @@ export type RedeemVoucherEvent = TypedEvent<
   [
     BigNumber,
     BigNumber,
+    BigNumber,
     string,
     string,
     BigNumber,
@@ -228,7 +229,8 @@ export type RedeemVoucherEvent = TypedEvent<
     string
   ],
   {
-    id: BigNumber;
+    redeemId: BigNumber;
+    tokenId: BigNumber;
     amount: BigNumber;
     userUuid: string;
     voucherType: string;
@@ -585,8 +587,9 @@ export interface IKApmNftVoucher extends BaseContract {
       redeemAvailable?: null
     ): SetVoucherDetailEventFilter;
 
-    "RedeemVoucher(uint256,uint256,string,string,uint256,uint256,string,uint256,address)"(
-      id?: BigNumberish | null,
+    "RedeemVoucher(uint256,uint256,uint256,string,string,uint256,uint256,string,uint256,address)"(
+      redeemId?: BigNumberish | null,
+      tokenId?: BigNumberish | null,
       amount?: null,
       userUuid?: string | null,
       voucherType?: null,
@@ -594,10 +597,11 @@ export interface IKApmNftVoucher extends BaseContract {
       faceValue?: null,
       currencyCode?: null,
       expireAt?: null,
-      sender?: string | null
+      sender?: null
     ): RedeemVoucherEventFilter;
     RedeemVoucher(
-      id?: BigNumberish | null,
+      redeemId?: BigNumberish | null,
+      tokenId?: BigNumberish | null,
       amount?: null,
       userUuid?: string | null,
       voucherType?: null,
@@ -605,7 +609,7 @@ export interface IKApmNftVoucher extends BaseContract {
       faceValue?: null,
       currencyCode?: null,
       expireAt?: null,
-      sender?: string | null
+      sender?: null
     ): RedeemVoucherEventFilter;
 
     "TransferSingle(address,address,address,uint256,uint256)"(

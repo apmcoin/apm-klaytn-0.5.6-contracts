@@ -246,9 +246,10 @@ export type RedeemVoucher_uint256_uint256_string_string_string_string_uint256_ui
 export type RedeemVoucher_uint256_uint256_string_string_string_string_uint256_uint256_string_uint256_address_EventFilter =
   TypedEventFilter<RedeemVoucher_uint256_uint256_string_string_string_string_uint256_uint256_string_uint256_address_Event>;
 
-export type RedeemVoucher_uint256_uint256_string_string_uint256_uint256_string_uint256_address_Event =
+export type RedeemVoucher_uint256_uint256_uint256_string_string_uint256_uint256_string_uint256_address_Event =
   TypedEvent<
     [
+      BigNumber,
       BigNumber,
       BigNumber,
       string,
@@ -260,7 +261,8 @@ export type RedeemVoucher_uint256_uint256_string_string_uint256_uint256_string_u
       string
     ],
     {
-      id: BigNumber;
+      redeemId: BigNumber;
+      tokenId: BigNumber;
       amount: BigNumber;
       userUuid: string;
       voucherType: string;
@@ -272,8 +274,8 @@ export type RedeemVoucher_uint256_uint256_string_string_uint256_uint256_string_u
     }
   >;
 
-export type RedeemVoucher_uint256_uint256_string_string_uint256_uint256_string_uint256_address_EventFilter =
-  TypedEventFilter<RedeemVoucher_uint256_uint256_string_string_uint256_uint256_string_uint256_address_Event>;
+export type RedeemVoucher_uint256_uint256_uint256_string_string_uint256_uint256_string_uint256_address_EventFilter =
+  TypedEventFilter<RedeemVoucher_uint256_uint256_uint256_string_string_uint256_uint256_string_uint256_address_Event>;
 
 export type SetBlacklistManagerEvent = TypedEvent<
   [string],
@@ -664,8 +666,9 @@ export interface IKApmNftVoucherSale extends BaseContract {
       expireAt?: null,
       sender?: string | null
     ): RedeemVoucher_uint256_uint256_string_string_string_string_uint256_uint256_string_uint256_address_EventFilter;
-    "RedeemVoucher(uint256,uint256,string,string,uint256,uint256,string,uint256,address)"(
-      id?: BigNumberish | null,
+    "RedeemVoucher(uint256,uint256,uint256,string,string,uint256,uint256,string,uint256,address)"(
+      redeemId?: BigNumberish | null,
+      tokenId?: BigNumberish | null,
       amount?: null,
       userUuid?: string | null,
       voucherType?: null,
@@ -673,8 +676,8 @@ export interface IKApmNftVoucherSale extends BaseContract {
       faceValue?: null,
       currencyCode?: null,
       expireAt?: null,
-      sender?: string | null
-    ): RedeemVoucher_uint256_uint256_string_string_uint256_uint256_string_uint256_address_EventFilter;
+      sender?: null
+    ): RedeemVoucher_uint256_uint256_uint256_string_string_uint256_uint256_string_uint256_address_EventFilter;
 
     "SetBlacklistManager(address)"(
       account?: string | null

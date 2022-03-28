@@ -21,7 +21,8 @@ contract IKApmNftVoucher is IKIP37 {
         bool redeemAvailable
         );
     event RedeemVoucher(
-        uint256 indexed id,
+        uint256 indexed redeemId,
+        uint256 indexed tokenId,
         uint256 amount,
         string indexed userUuid,
         string voucherType,
@@ -29,7 +30,7 @@ contract IKApmNftVoucher is IKIP37 {
         uint256 faceValue,
         string currencyCode,
         uint256 expireAt,
-        address indexed sender
+        address sender
         );
 
     //Transfer voucher to off-chain service using uuid
