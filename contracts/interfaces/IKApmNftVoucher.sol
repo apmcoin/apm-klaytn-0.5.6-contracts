@@ -10,7 +10,7 @@ contract IKApmNftVoucher is IKIP37 {
     event RegisterUuidBlacklist(string indexed uuid);
     event UnregisterUuidBlacklist(string indexed uuid);
     event SetVoucherDetail(
-        uint256 indexed id,
+        uint256 indexed tokenId,
         string name,
         string description,
         string indexed voucherType,
@@ -35,13 +35,13 @@ contract IKApmNftVoucher is IKIP37 {
 
     //Transfer voucher to off-chain service using uuid
     function redeemVoucher(
-        uint256 id,
+        uint256 tokenId,
         uint256 amount,
         string calldata userUuid
     ) external;
 
     function setVoucherDetail(
-        uint256 id,
+        uint256 tokenId,
         string calldata title,
         string calldata description,
         string calldata voucherType,
