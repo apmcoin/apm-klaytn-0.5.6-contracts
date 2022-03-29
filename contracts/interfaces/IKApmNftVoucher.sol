@@ -13,7 +13,7 @@ contract IKApmNftVoucher is IKIP37 {
         uint256 indexed tokenId,
         string name,
         string description,
-        string indexed voucherType,
+        string voucherType,
         uint256 indexed voucherFormatId,
         uint256 faceValue,
         string currencyCode,
@@ -24,13 +24,13 @@ contract IKApmNftVoucher is IKIP37 {
         uint256 indexed redeemId,
         uint256 indexed tokenId,
         uint256 amount,
-        string indexed userUuid,
+        string userUuid,
         string voucherType,
         uint256 voucherFormatId,
         uint256 faceValue,
         string currencyCode,
         uint256 expireAt,
-        address sender
+        address indexed sender
         );
 
     //Transfer voucher to off-chain service using uuid
