@@ -13,20 +13,18 @@ contract IKApmNftVoucher is IKIP37 {
         uint256 indexed tokenId,
         string name,
         string description,
-        string voucherType,
         uint256 indexed voucherFormatId,
-        uint256 faceValue,
+        uint256 indexed faceValue,
         string currencyCode,
         uint256 expireAt,
         bool redeemAvailable
         );
     event RedeemVoucher(
-        uint256 indexed redeemId,
+        uint256 redeemId,
         uint256 indexed tokenId,
         uint256 amount,
         string userUuid,
-        string voucherType,
-        uint256 voucherFormatId,
+        uint256 indexed voucherFormatId,
         uint256 faceValue,
         string currencyCode,
         uint256 expireAt,
@@ -44,13 +42,26 @@ contract IKApmNftVoucher is IKIP37 {
         uint256 tokenId,
         string calldata title,
         string calldata description,
-        string calldata voucherType,
         uint256 voucherFormatId,
         uint256 faceValue,
         string calldata currencyCode,
         uint256 expireAt,
         bool redeemAvailable
     ) external;
+
+    function voucherInfo(uint256 tokenId)
+        public
+        view
+        returns (
+            string memory,
+            string memory,
+            uint256,
+            uint256,
+            uint256,
+            bool,
+            bool
+    );
+
     function isBlacklist(address account) public view returns (bool);
     function isUuidBlacklist(string memory uuid) public view returns (bool);
 }

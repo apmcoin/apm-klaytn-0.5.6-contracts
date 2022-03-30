@@ -31,7 +31,7 @@ export interface KApmNftVoucherInterface extends utils.Interface {
     "isBlacklist(address)": FunctionFragment;
     "setCustomURI(uint256,string)": FunctionFragment;
     "unpause()": FunctionFragment;
-    "setVoucherDetail(uint256,string,string,string,uint256,uint256,string,uint256,bool)": FunctionFragment;
+    "setVoucherDetail(uint256,string,string,uint256,uint256,string,uint256,bool)": FunctionFragment;
     "isPauser(address)": FunctionFragment;
     "registerBlacklist(address)": FunctionFragment;
     "create(uint256,uint256,string)": FunctionFragment;
@@ -40,6 +40,7 @@ export interface KApmNftVoucherInterface extends utils.Interface {
     "isUuidBlacklist(string)": FunctionFragment;
     "renouncePauser()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
+    "voucherInfo(uint256)": FunctionFragment;
     "unregisterUuidBlacklist(string)": FunctionFragment;
     "addPauser(address)": FunctionFragment;
     "mint(uint256,address,uint256)": FunctionFragment;
@@ -103,7 +104,6 @@ export interface KApmNftVoucherInterface extends utils.Interface {
       BigNumberish,
       string,
       string,
-      string,
       BigNumberish,
       BigNumberish,
       string,
@@ -139,6 +139,10 @@ export interface KApmNftVoucherInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "voucherInfo",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "unregisterUuidBlacklist",
@@ -269,6 +273,10 @@ export interface KApmNftVoucherInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "voucherInfo",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "unregisterUuidBlacklist",
     data: BytesLike
   ): Result;
@@ -330,8 +338,8 @@ export interface KApmNftVoucherInterface extends utils.Interface {
     "UnregisterBlacklist(address)": EventFragment;
     "RegisterUuidBlacklist(string)": EventFragment;
     "UnregisterUuidBlacklist(string)": EventFragment;
-    "SetVoucherDetail(uint256,string,string,string,uint256,uint256,string,uint256,bool)": EventFragment;
-    "RedeemVoucher(uint256,uint256,uint256,string,string,uint256,uint256,string,uint256,address)": EventFragment;
+    "SetVoucherDetail(uint256,string,string,uint256,uint256,string,uint256,bool)": EventFragment;
+    "RedeemVoucher(uint256,uint256,uint256,string,uint256,uint256,string,uint256,address)": EventFragment;
     "MinterAdded(address)": EventFragment;
     "MinterRemoved(address)": EventFragment;
     "Paused(uint256,address)": EventFragment;
@@ -400,22 +408,11 @@ export type UnregisterUuidBlacklistEventFilter =
   TypedEventFilter<UnregisterUuidBlacklistEvent>;
 
 export type SetVoucherDetailEvent = TypedEvent<
-  [
-    BigNumber,
-    string,
-    string,
-    string,
-    BigNumber,
-    BigNumber,
-    string,
-    BigNumber,
-    boolean
-  ],
+  [BigNumber, string, string, BigNumber, BigNumber, string, BigNumber, boolean],
   {
-    id: BigNumber;
+    tokenId: BigNumber;
     name: string;
     description: string;
-    voucherType: string;
     voucherFormatId: BigNumber;
     faceValue: BigNumber;
     currencyCode: string;
@@ -433,7 +430,6 @@ export type RedeemVoucherEvent = TypedEvent<
     BigNumber,
     BigNumber,
     string,
-    string,
     BigNumber,
     BigNumber,
     string,
@@ -445,7 +441,6 @@ export type RedeemVoucherEvent = TypedEvent<
     tokenId: BigNumber;
     amount: BigNumber;
     userUuid: string;
-    voucherType: string;
     voucherFormatId: BigNumber;
     faceValue: BigNumber;
     currencyCode: string;
@@ -648,7 +643,6 @@ export interface KApmNftVoucher extends BaseContract {
       tokenId: BigNumberish,
       name: string,
       description: string,
-      voucherType: string,
       voucherFormatId: BigNumberish,
       faceValue: BigNumberish,
       currencyCode: string,
@@ -696,6 +690,21 @@ export interface KApmNftVoucher extends BaseContract {
     renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    voucherInfo(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [string, string, BigNumber, BigNumber, BigNumber, boolean, boolean] & {
+        name: string;
+        description: string;
+        voucherFormatId: BigNumber;
+        faceValue: BigNumber;
+        expireAt: BigNumber;
+        redeemAvailable: boolean;
+        initialize: boolean;
+      }
+    >;
 
     unregisterUuidBlacklist(
       uuid: string,
@@ -809,7 +818,6 @@ export interface KApmNftVoucher extends BaseContract {
       [
         string,
         string,
-        string,
         BigNumber,
         BigNumber,
         string,
@@ -819,7 +827,6 @@ export interface KApmNftVoucher extends BaseContract {
       ] & {
         name: string;
         description: string;
-        voucherType: string;
         voucherFormatId: BigNumber;
         faceValue: BigNumber;
         currencyCode: string;
@@ -906,7 +913,6 @@ export interface KApmNftVoucher extends BaseContract {
     tokenId: BigNumberish,
     name: string,
     description: string,
-    voucherType: string,
     voucherFormatId: BigNumberish,
     faceValue: BigNumberish,
     currencyCode: string,
@@ -951,6 +957,21 @@ export interface KApmNftVoucher extends BaseContract {
   renounceOwnership(
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  voucherInfo(
+    tokenId: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<
+    [string, string, BigNumber, BigNumber, BigNumber, boolean, boolean] & {
+      name: string;
+      description: string;
+      voucherFormatId: BigNumber;
+      faceValue: BigNumber;
+      expireAt: BigNumber;
+      redeemAvailable: boolean;
+      initialize: boolean;
+    }
+  >;
 
   unregisterUuidBlacklist(
     uuid: string,
@@ -1064,7 +1085,6 @@ export interface KApmNftVoucher extends BaseContract {
     [
       string,
       string,
-      string,
       BigNumber,
       BigNumber,
       string,
@@ -1074,7 +1094,6 @@ export interface KApmNftVoucher extends BaseContract {
     ] & {
       name: string;
       description: string;
-      voucherType: string;
       voucherFormatId: BigNumber;
       faceValue: BigNumber;
       currencyCode: string;
@@ -1151,7 +1170,6 @@ export interface KApmNftVoucher extends BaseContract {
       tokenId: BigNumberish,
       name: string,
       description: string,
-      voucherType: string,
       voucherFormatId: BigNumberish,
       faceValue: BigNumberish,
       currencyCode: string,
@@ -1192,6 +1210,21 @@ export interface KApmNftVoucher extends BaseContract {
     renouncePauser(overrides?: CallOverrides): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
+
+    voucherInfo(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [string, string, BigNumber, BigNumber, BigNumber, boolean, boolean] & {
+        name: string;
+        description: string;
+        voucherFormatId: BigNumber;
+        faceValue: BigNumber;
+        expireAt: BigNumber;
+        redeemAvailable: boolean;
+        initialize: boolean;
+      }
+    >;
 
     unregisterUuidBlacklist(
       uuid: string,
@@ -1297,7 +1330,6 @@ export interface KApmNftVoucher extends BaseContract {
       [
         string,
         string,
-        string,
         BigNumber,
         BigNumber,
         string,
@@ -1307,7 +1339,6 @@ export interface KApmNftVoucher extends BaseContract {
       ] & {
         name: string;
         description: string;
-        voucherType: string;
         voucherFormatId: BigNumber;
         faceValue: BigNumber;
         currencyCode: string;
@@ -1352,52 +1383,48 @@ export interface KApmNftVoucher extends BaseContract {
       uuid?: string | null
     ): UnregisterUuidBlacklistEventFilter;
 
-    "SetVoucherDetail(uint256,string,string,string,uint256,uint256,string,uint256,bool)"(
-      id?: BigNumberish | null,
+    "SetVoucherDetail(uint256,string,string,uint256,uint256,string,uint256,bool)"(
+      tokenId?: BigNumberish | null,
       name?: null,
       description?: null,
-      voucherType?: string | null,
       voucherFormatId?: BigNumberish | null,
-      faceValue?: null,
+      faceValue?: BigNumberish | null,
       currencyCode?: null,
       expireAt?: null,
       redeemAvailable?: null
     ): SetVoucherDetailEventFilter;
     SetVoucherDetail(
-      id?: BigNumberish | null,
+      tokenId?: BigNumberish | null,
       name?: null,
       description?: null,
-      voucherType?: string | null,
       voucherFormatId?: BigNumberish | null,
-      faceValue?: null,
+      faceValue?: BigNumberish | null,
       currencyCode?: null,
       expireAt?: null,
       redeemAvailable?: null
     ): SetVoucherDetailEventFilter;
 
-    "RedeemVoucher(uint256,uint256,uint256,string,string,uint256,uint256,string,uint256,address)"(
-      redeemId?: BigNumberish | null,
+    "RedeemVoucher(uint256,uint256,uint256,string,uint256,uint256,string,uint256,address)"(
+      redeemId?: null,
       tokenId?: BigNumberish | null,
       amount?: null,
-      userUuid?: string | null,
-      voucherType?: null,
-      voucherFormatId?: null,
+      userUuid?: null,
+      voucherFormatId?: BigNumberish | null,
       faceValue?: null,
       currencyCode?: null,
       expireAt?: null,
-      sender?: null
+      sender?: string | null
     ): RedeemVoucherEventFilter;
     RedeemVoucher(
-      redeemId?: BigNumberish | null,
+      redeemId?: null,
       tokenId?: BigNumberish | null,
       amount?: null,
-      userUuid?: string | null,
-      voucherType?: null,
-      voucherFormatId?: null,
+      userUuid?: null,
+      voucherFormatId?: BigNumberish | null,
       faceValue?: null,
       currencyCode?: null,
       expireAt?: null,
-      sender?: null
+      sender?: string | null
     ): RedeemVoucherEventFilter;
 
     "MinterAdded(address)"(account?: string | null): MinterAddedEventFilter;
@@ -1557,7 +1584,6 @@ export interface KApmNftVoucher extends BaseContract {
       tokenId: BigNumberish,
       name: string,
       description: string,
-      voucherType: string,
       voucherFormatId: BigNumberish,
       faceValue: BigNumberish,
       currencyCode: string,
@@ -1604,6 +1630,11 @@ export interface KApmNftVoucher extends BaseContract {
 
     renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    voucherInfo(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     unregisterUuidBlacklist(
@@ -1800,7 +1831,6 @@ export interface KApmNftVoucher extends BaseContract {
       tokenId: BigNumberish,
       name: string,
       description: string,
-      voucherType: string,
       voucherFormatId: BigNumberish,
       faceValue: BigNumberish,
       currencyCode: string,
@@ -1850,6 +1880,11 @@ export interface KApmNftVoucher extends BaseContract {
 
     renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    voucherInfo(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     unregisterUuidBlacklist(

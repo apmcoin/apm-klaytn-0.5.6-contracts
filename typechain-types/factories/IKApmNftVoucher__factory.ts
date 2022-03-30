@@ -56,7 +56,7 @@ const _abi = [
     constant: false,
     inputs: [
       {
-        name: "id",
+        name: "tokenId",
         type: "uint256",
       },
       {
@@ -127,7 +127,7 @@ const _abi = [
     constant: false,
     inputs: [
       {
-        name: "id",
+        name: "tokenId",
         type: "uint256",
       },
       {
@@ -136,10 +136,6 @@ const _abi = [
       },
       {
         name: "description",
-        type: "string",
-      },
-      {
-        name: "voucherType",
         type: "string",
       },
       {
@@ -202,6 +198,49 @@ const _abi = [
     ],
     name: "isUuidBlacklist",
     outputs: [
+      {
+        name: "",
+        type: "bool",
+      },
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "voucherInfo",
+    outputs: [
+      {
+        name: "",
+        type: "string",
+      },
+      {
+        name: "",
+        type: "string",
+      },
+      {
+        name: "",
+        type: "uint256",
+      },
+      {
+        name: "",
+        type: "uint256",
+      },
+      {
+        name: "",
+        type: "uint256",
+      },
+      {
+        name: "",
+        type: "bool",
+      },
       {
         name: "",
         type: "bool",
@@ -347,7 +386,7 @@ const _abi = [
     inputs: [
       {
         indexed: true,
-        name: "id",
+        name: "tokenId",
         type: "uint256",
       },
       {
@@ -362,16 +401,11 @@ const _abi = [
       },
       {
         indexed: true,
-        name: "voucherType",
-        type: "string",
-      },
-      {
-        indexed: true,
         name: "voucherFormatId",
         type: "uint256",
       },
       {
-        indexed: false,
+        indexed: true,
         name: "faceValue",
         type: "uint256",
       },
@@ -398,7 +432,7 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
-        indexed: true,
+        indexed: false,
         name: "redeemId",
         type: "uint256",
       },
@@ -413,17 +447,12 @@ const _abi = [
         type: "uint256",
       },
       {
-        indexed: true,
+        indexed: false,
         name: "userUuid",
         type: "string",
       },
       {
-        indexed: false,
-        name: "voucherType",
-        type: "string",
-      },
-      {
-        indexed: false,
+        indexed: true,
         name: "voucherFormatId",
         type: "uint256",
       },
@@ -443,7 +472,7 @@ const _abi = [
         type: "uint256",
       },
       {
-        indexed: false,
+        indexed: true,
         name: "sender",
         type: "address",
       },

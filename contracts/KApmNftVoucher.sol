@@ -21,7 +21,6 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
     struct Voucher{
         string name;
         string description;
-        string voucherType; // Readerble type. Event Voucher, e-Voucher ..
         uint256 voucherFormatId;
         uint256 faceValue; // 10000
         string currencyCode; // KRW
@@ -53,7 +52,6 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
             tokenId,
             amount,
             userUuid,
-            _vouchers[tokenId].voucherType,
             _vouchers[tokenId].voucherFormatId,
             _vouchers[tokenId].faceValue,
             _vouchers[tokenId].currencyCode,
@@ -67,7 +65,6 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
         uint256 tokenId,
         string calldata name,
         string calldata description,
-        string calldata voucherType,
         uint256 voucherFormatId,
         uint256 faceValue,
         string calldata currencyCode,
@@ -81,7 +78,6 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
         _vouchers[tokenId] = Voucher({
                 name : name,
                 description : description,
-                voucherType : voucherType,
                 voucherFormatId : voucherFormatId,
                 faceValue : faceValue,
                 currencyCode : currencyCode,
@@ -89,18 +85,41 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
                 redeemAvailable : redeemAvailable,
                 initialize : true
             });
-        
+
         emit SetVoucherDetail(
             tokenId,
             name,
             description,
-            voucherType,
             voucherFormatId,
             faceValue,
             currencyCode,
             expireAt,
             redeemAvailable
             );
+    }
+
+    function voucherInfo(uint256 tokenId)
+        public
+        view
+        returns (
+            string memory name,
+            string memory description,
+            uint256 voucherFormatId,
+            uint256 faceValue,
+            uint256 expireAt,
+            bool redeemAvailable,
+            bool initialize
+        )
+    {
+        return(
+            _vouchers[tokenId].name,
+            _vouchers[tokenId].description,
+            _vouchers[tokenId].voucherFormatId,
+            _vouchers[tokenId].faceValue,
+            _vouchers[tokenId].expireAt,
+            _vouchers[tokenId].redeemAvailable,
+            _vouchers[tokenId].initialize
+        );
     }
 
     function redeemId() public view returns (uint256){
