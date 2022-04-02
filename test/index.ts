@@ -2,14 +2,18 @@ import { expect } from "chai";
 import { ethers, waffle } from "hardhat";
 
 describe("Contract", function () {
-  it("Deploy, Mint, Batch", async function () {
+  it("NFT Voucher Test", async function () {
     const provider = waffle.provider;
     //const [minter] = await ethers.getSigners();
     const [minter, user] = provider.getWallets();
     const ipfsEndpoint = "https://mock-endpoint/metadata/"
-    const NFT = await ethers.getContractFactory("SampleNFT");
-    const nft = await NFT.deploy();
+    const NFT = await ethers.getContractFactory("KApmNftVoucher");
+    const nft = await NFT.deploy("ipfsEndpoint");
     await nft.deployed();
+
+    //create digital voucher
+    await nft.create(0, 0)
+    
 
     //set ipfs endpoint
     await nft.setVariableBaseUri(0, ipfsEndpoint);

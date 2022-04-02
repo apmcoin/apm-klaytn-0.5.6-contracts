@@ -29,7 +29,7 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
         bool initialize;
     }
 
-    mapping(uint256 => Voucher) public _vouchers;
+    mapping(uint256 => Voucher) private _vouchers;
     mapping(string => bool) private _isUuidBlacklist;
     mapping(address => bool) private _isBlacklist;
     address public blacklistManager;
