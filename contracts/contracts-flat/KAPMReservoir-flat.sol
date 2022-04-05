@@ -1,6 +1,6 @@
 pragma solidity ^0.8.12;
 
-
+// SPDX-License-Identifier: MIT
 interface IFeeDB {
     event UpdateFeeAndRecipient(uint256 newFee, address newRecipient);
     event UpdatePaysFeeWhenSending(bool newType);
