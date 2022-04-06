@@ -2,116 +2,93 @@ pragma solidity ^0.5.6;
 
 import "./klaytn-contracts/ownership/Ownable.sol";
 import "./klaytn-contracts/math/SafeMath.sol";
+//import "./klaytn-contracts/token/KIP37/KIP37.sol";
+//import "./klaytn-contracts/token/KIP7/KIP7.sol";
 import "./interfaces/IKApmNftVoucherSale.sol";
-import "./interfaces/IKApmCoin.sol";
+import "./klaytn-contracts/token/KIP37/KIP37Mintable.sol";
 
-contract KApmNftVoucherSale is Ownable {
+contract KApmNftVoucherSale is Ownable, IKApmNftVoucherSale {
     using SafeMath for uint256;
-
+    IKApmCoin public apmCoin;
+    KIP37Mintable public nftVoucher;
     address public feeTo;
-    IKApmNftVoucher private _nftVoucher;
-    IKApmCoin private _apmCoin;
-    uint256 private _tokenId;
-    uint256 private _apmPerNft = 25 * 1e18;
-    uint256 private _step = 0;
-    uint256 private _saleLimit = 0;
-    uint256 private _saleCount = 0;
-    string private _saleName;
-    string private _saleDescription;
+    uint256 public tokenId;
+    uint256 public apmPerNft = 25 * 1e18;
+    uint256 public step = 0;
+    uint256 public saleLimit = 0;
+    uint256 public saleCount = 0;
+    string public saleName;
+    string public saleDescription;
     mapping(address => bool) private _whitelist;
 
     constructor(
-        IKApmCoin apmCoinAddress,
-        IKApmNftVoucher nftVoucherAddress,
-        address feeToAddress,
-        uint256 tokenIdValue,
-        string memory saleNameValue,
-        string memory saleDescriptionValue
+        IKApmCoin _apmCoin,
+        KIP37Mintable _nftVoucher,
+        address _feeToAddress,
+        uint256 _tokenId,
+        uint256 _saleLimit,
+        string memory _saleName,
+        string memory _saleDescription
         )
         public
     {
-        _apmCoin = apmCoinAddress;
-        _nftVoucher = nftVoucherAddress;
-        feeTo = feeToAddress;
-        _tokenId = tokenIdValue;
-        _saleName = saleNameValue;
-        _saleDescription = saleDescriptionValue;
+        setApmCoin(_apmCoin);
+        setNftVoucher(_nftVoucher);
+        setFeeTo(_feeToAddress);
+        setTokenId(_tokenId);
+        setSaleLimit(_saleLimit);
+        setSaleName(_saleName);
+        setSaleDescription(_saleDescription);
     }
 
-    function setFeeTo(address feeToAddress) external onlyOwner {
-        feeTo = feeToAddress;
+    function setApmCoin(IKApmCoin _apmCoin) public onlyOwner {
+        apmCoin = _apmCoin;
+        emit SetApmCoin(address(apmCoin));
     }
 
-    function getApmCoin() public view returns (IKApmCoin){
-        return _apmCoin;
+    function setNftVoucher(KIP37Mintable _nftVoucher) public onlyOwner {
+        nftVoucher = _nftVoucher;
+        emit SetNftVoucher(address(nftVoucher));
     }
 
-    function setApmCoin(IKApmCoin apmCoinAddress) external onlyOwner {
-        _apmCoin = apmCoinAddress;
+    function setFeeTo(address _feeTo) public onlyOwner {
+        feeTo = _feeTo;
+        emit SetFeeTo(feeTo);
     }
 
-    function getNftVoucher() public view returns (IKApmNftVoucher){
-        return _nftVoucher;
+    function setTokenId(uint256 _tokenId) public onlyOwner {
+        tokenId = _tokenId;
+        emit SetTokenId(tokenId);
     }
 
-    function setNftVoucher(IKApmNftVoucher nftVoucherAddress) external onlyOwner {
-        _nftVoucher = nftVoucherAddress;
+    function setApmPerNft(uint256 _apmPerNft) public onlyOwner {
+        apmPerNft = _apmPerNft;
+        emit SetApmPerNft(apmPerNft);
     }
 
-    function getSaleTokenId() public view returns (uint256){
-        return _tokenId;
+    function setStep(uint256 _step) public onlyOwner {
+        step = _step;
+        emit SetStep(step);
     }
 
-    function setSaleTokenId(uint256 nftTokenId) external onlyOwner {
-        _tokenId = nftTokenId;
+    function setSaleLimit(uint256 _saleLimit) public onlyOwner {
+        saleLimit = _saleLimit;
+        emit SetSaleLimit(saleLimit);
     }
 
-    function getApmPerNft() public view returns (uint256){
-        return _apmPerNft;
+    function setSaleCount(uint256 _saleCount) public onlyOwner {
+        saleCount = _saleCount;
+         emit SetSaleCount(saleCount);
     }
 
-    function setApmPerNft(uint256 apmPerNftValue) external onlyOwner {
-        _apmPerNft = apmPerNftValue;
+    function setSaleName(string memory _saleName) public onlyOwner {
+        saleName = _saleName;
+        emit SetSaleName(saleName);
     }
 
-    function getStep() public view returns (uint256){
-        return _step;
-    }
-
-    function setStep(uint256 stepValue) external onlyOwner {
-        _step = stepValue;
-    }
-
-    function getSaleLimit() public view returns (uint256){
-        return _saleLimit;
-    }
-
-    function setSaleLimit(uint256 saleLimitValue) external onlyOwner {
-        _saleLimit = saleLimitValue;
-    }
-
-    function getSaleCount() public view returns (uint256){
-        return _saleCount;
-    }
-
-    function setSaleCount(uint256 saleCountValue) external onlyOwner {
-        _saleCount = saleCountValue;
-    }
-
-    function getSaleName() public view returns (string memory){
-        return _saleName;
-    }
-
-    function setSaleName(string calldata saleNameValue) external onlyOwner {
-        _saleName = saleNameValue;
-    }
-
-    function getSaleDescription() public view returns (string memory){
-        return _saleDescription;
-    }
-
-    function setSaleDescription(string calldata saleDescriptionValue) external onlyOwner {
-        _saleDescription = saleDescriptionValue;
+    function setSaleDescription(string memory _saleDescription) public onlyOwner {
+        saleDescription = _saleDescription;
+        emit SetSaleDescription(saleDescription);
     }
 
     function isWhitelist(address wallet) public view returns (bool){
@@ -131,19 +108,20 @@ contract KApmNftVoucherSale is Ownable {
     }
 
     function buy(uint256 _buyCount, uint256 _apmAmount) external {
-        require(_saleCount.add(_buyCount) <= _saleLimit, "buyCount is greater than the remaining sales quantity.");
-        require(_buyCount.mul(_apmAmount) == _buyCount.mul(_apmPerNft), "Either apmPerNft has changed or the input price is invalid.");
+        uint256 calSaleCount = saleCount.add(_buyCount);
+        require(calSaleCount <= saleLimit, "buyCount is greater than the remaining sales quantity.");
+
+        uint256 calBuyApmAmount = _buyCount.mul(apmPerNft);
+        require(_apmAmount == calBuyApmAmount, "Either apmPerNft has changed or the input price is invalid.");
         require(isWhitelist(msg.sender), "It's not on the whitelist.");
 
-        //_apmCoin.transferFrom(msg.sender,
-        //_saleCount = _saleCount.add(1);
+        apmCoin.transferFrom(msg.sender, feeTo, _apmAmount);
 
-/*
-        uint256 totalSupply = nft.totalSupply();
-        for (uint256 i = totalSupply; i < totalSupply.add(count); i = i.add(1)) {
-            nft.mint(msg.sender, i);
+        setSaleCount(calSaleCount);
+        nftVoucher.mint(tokenId, msg.sender, _buyCount);
+
+        if(saleCount == saleLimit){
+            setStep(2);
         }
-        feeTo.transfer(msg.value);
-        limit = limit.sub(count);*/
     }
 }
