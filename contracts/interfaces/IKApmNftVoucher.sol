@@ -14,8 +14,6 @@ contract IKApmNftVoucher is IKIP37 {
         string name,
         string description,
         uint256 indexed voucherFormatId,
-        uint256 indexed faceValue,
-        string currencyCode,
         uint256 expireAt,
         bool redeemAvailable
         );
@@ -25,8 +23,6 @@ contract IKApmNftVoucher is IKIP37 {
         uint256 amount,
         string userUuid,
         uint256 indexed voucherFormatId,
-        uint256 faceValue,
-        string currencyCode,
         uint256 expireAt,
         address indexed sender
         );
@@ -43,8 +39,6 @@ contract IKApmNftVoucher is IKIP37 {
         string calldata title,
         string calldata description,
         uint256 voucherFormatId,
-        uint256 faceValue,
-        string calldata currencyCode,
         uint256 expireAt,
         bool redeemAvailable
     ) external;

@@ -22,8 +22,6 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
         string name;
         string description;
         uint256 voucherFormatId;
-        uint256 faceValue; // 10000
-        string currencyCode; // KRW
         uint256 expireAt; // utc+0 timestamp
         bool redeemAvailable;
         bool initialize;
@@ -53,8 +51,6 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
             amount,
             userUuid,
             _vouchers[tokenId].voucherFormatId,
-            _vouchers[tokenId].faceValue,
-            _vouchers[tokenId].currencyCode,
             _vouchers[tokenId].expireAt,
             msg.sender
             );
@@ -66,21 +62,16 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
         string calldata name,
         string calldata description,
         uint256 voucherFormatId,
-        uint256 faceValue,
-        string calldata currencyCode,
         uint256 expireAt,
         bool redeemAvailable
     ) external onlyMinter {
         require(_exists(tokenId), "Do token create first.");
-        require(bytes(currencyCode).length > 0, "Currency code required");
         require(expireAt > now, "The expiration date is before the current time.");
 
         _vouchers[tokenId] = Voucher({
                 name : name,
                 description : description,
                 voucherFormatId : voucherFormatId,
-                faceValue : faceValue,
-                currencyCode : currencyCode,
                 expireAt : expireAt,
                 redeemAvailable : redeemAvailable,
                 initialize : true
@@ -91,8 +82,6 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
             name,
             description,
             voucherFormatId,
-            faceValue,
-            currencyCode,
             expireAt,
             redeemAvailable
             );
@@ -105,7 +94,6 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
             string memory name,
             string memory description,
             uint256 voucherFormatId,
-            uint256 faceValue,
             uint256 expireAt,
             bool redeemAvailable,
             bool initialize
@@ -115,7 +103,6 @@ contract KApmNftVoucher is Ownable, KIP37, KIP37Burnable, KIP37Pausable, KIP37Mi
             _vouchers[tokenId].name,
             _vouchers[tokenId].description,
             _vouchers[tokenId].voucherFormatId,
-            _vouchers[tokenId].faceValue,
             _vouchers[tokenId].expireAt,
             _vouchers[tokenId].redeemAvailable,
             _vouchers[tokenId].initialize
