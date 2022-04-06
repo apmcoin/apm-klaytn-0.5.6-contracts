@@ -1,6 +1,6 @@
 pragma solidity ^0.5.6;
 
-import "hardhat/console.sol";
+//import "hardhat/console.sol";
 import "./klaytn-contracts/ownership/Ownable.sol";
 import "./klaytn-contracts/math/SafeMath.sol";
 //import "./klaytn-contracts/token/KIP37/KIP37.sol";
@@ -109,19 +109,20 @@ contract KApmNftVoucherSale is Ownable, IKApmNftVoucherSale {
     }
 
     function buy(uint256 _buyCount, uint256 _apmAmount) external {
-        console.log(_buyCount);
-        console.log(_apmAmount);
-        uint256 calSaleCount = saleCount.add(_buyCount);
-        require(calSaleCount <= saleLimit, "buyCount is greater than the remaining sales quantity.");
+        require(_buyCount > 0, "Need _buyCount");
+        require(_apmAmount > 0, "Need _apmAmount");
+        require(step == 1, "It's not on sale.");
+        require(isWhitelist(msg.sender), "It's not on the whitelist.");
 
+        uint256 calSaleCount = saleCount.add(_buyCount);
+        require(calSaleCount <= saleLimit, "Sales NFT is insufficient.");
         uint256 calBuyApmAmount = _buyCount.mul(apmPerNft);
         require(_apmAmount == calBuyApmAmount, "Either apmPerNft has changed or the input price is invalid.");
-        require(isWhitelist(msg.sender), "It's not on the whitelist.");
         uint256 allowanceAmount = apmCoin.allowance(msg.sender, address(this));
         require(_apmAmount <= allowanceAmount, "Need token approve");
         apmCoin.transferFrom(msg.sender, feeTo, _apmAmount);
 
-        setSaleCount(calSaleCount);
+        saleCount = calSaleCount;
         nftVoucher.mint(tokenId, msg.sender, _buyCount);
 
         if(saleCount == saleLimit){

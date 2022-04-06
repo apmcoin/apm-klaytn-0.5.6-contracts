@@ -18,7 +18,7 @@ describe("Contract", function () {
     //KIP-7 APM 배포
     const apm = await APM.deploy()
     await apm.deployed()
-    await apm.mint(minter.address, "10000000000000000000000");
+    await apm.mint(minter.address, "10000000000000000000000000");
 
     //KIP-37 바우처 배포
     const nft = await NFT.deploy("ipfsEndpoint");
@@ -72,22 +72,53 @@ describe("Contract", function () {
     await nft.addMinter(saleForVip.address);
     console.log(await nft.isMinter(saleForStaff.address))
     
-    //화이트리스트 등록
-    await saleForStaff.addWhitelist([minter.address, staff1.address, staff2.address]);
-    await saleForVip.addWhitelist([vip1.address, vip2.address]);
+
     console.log("----")
     expect(await nft.balanceOf(minter.address, 2)).to.be.equal(0);
     let apmPerNft = await saleForStaff.apmPerNft();
-    let buyAmount = 3;
+    let buyAmount = 1001;
 
-    console.log("어프로브전:" + await apm.allowance(minter.address, saleForStaff.address));
     //민터 계약의 어프로브 수행
+    console.log("before:" + await apm.allowance(minter.address, saleForStaff.address));
     await apm.approve(saleForStaff.address, "115792089237316195423570985008687907853269984665640564039457584007913129639935");
-    console.log("어프로브후:" + await apm.allowance(minter.address, saleForStaff.address));
-    let buyTx = await saleForStaff.buy(buyAmount, apmPerNft.mul(buyAmount));
-    await buyTx.wait();
-    console.log("8")
-    expect(await nft.balanceOf(minter.address, 2)).to.be.equal(buyAmount);
+    console.log("after:" + await apm.allowance(minter.address, saleForStaff.address));
+    //expect(await saleForStaff.buy(buyAmount, apmPerNft.mul(buyAmount))).to.be.revertedWith("There is no sale NFT");
+
+    //expect(await nft.tokenURI(9999)).to.be.equal(ipfsEndpoint + "9999");
+
+
+    await expect(saleForStaff.buy(buyAmount, apmPerNft.mul(buyAmount))).to.be.revertedWith("It's not on sale.");
+    await saleForStaff.setStep(1);
+
+    await expect(saleForStaff.buy(buyAmount, apmPerNft.mul(buyAmount))).to.be.revertedWith("It's not on the whitelist.");
+    //화이트리스트 등록
+    await saleForStaff.addWhitelist([minter.address, staff1.address, staff2.address]);
+    await saleForVip.addWhitelist([vip1.address, vip2.address]);
+
+    await expect(saleForStaff.buy(buyAmount, apmPerNft.mul(buyAmount))).to.be.revertedWith("Sales NFT is insufficient.");
+
+    buyAmount = 1000;
+    await saleForStaff.buy(buyAmount, apmPerNft.mul(buyAmount));
+
+    console.log(await saleForStaff.step());
+
+    //await expect(nft.mint(minter.address, 0)).to.be.revertedWith("Mint limit exceeded");
+
+    //세일리미트 설정 전 구매시도
+    //expect(await saleForStaff.buy(buyAmount, apmPerNft.mul(buyAmount)).to.be.revertedWith("There is no sale NFT"));
+
+ 
+    //await saleForStaff.buy(buyAmount, apmPerNft.mul(buyAmount));
+    //await expect(saleForStaff.buy(buyAmount, apmPerNft.mul(buyAmount)).to.be.revertedWith("Sales NFT is insufficient."));
+
+    //buyAmount = 2;
+    //await saleForStaff.buy(buyAmount, apmPerNft.mul(buyAmount));
+
+    //await buyTx.wait();
+    //console.log("8")
+    //expect(await nft.balanceOf(minter.address, 2)).to.be.equal(buyAmount);
+
+
 
 /*
 
