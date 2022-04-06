@@ -22,9 +22,9 @@ export interface IKApmNftVoucherInterface extends utils.Interface {
     "balanceOf(address,uint256)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "redeemVoucher(uint256,uint256,string)": FunctionFragment;
+    "setVoucherDetail(uint256,string,string,uint256,uint256,bool)": FunctionFragment;
     "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)": FunctionFragment;
     "isBlacklist(address)": FunctionFragment;
-    "setVoucherDetail(uint256,string,string,uint256,uint256,string,uint256,bool)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
     "isUuidBlacklist(string)": FunctionFragment;
     "voucherInfo(uint256)": FunctionFragment;
@@ -46,23 +46,14 @@ export interface IKApmNftVoucherInterface extends utils.Interface {
     values: [BigNumberish, BigNumberish, string]
   ): string;
   encodeFunctionData(
+    functionFragment: "setVoucherDetail",
+    values: [BigNumberish, string, string, BigNumberish, BigNumberish, boolean]
+  ): string;
+  encodeFunctionData(
     functionFragment: "safeBatchTransferFrom",
     values: [string, string, BigNumberish[], BigNumberish[], BytesLike]
   ): string;
   encodeFunctionData(functionFragment: "isBlacklist", values: [string]): string;
-  encodeFunctionData(
-    functionFragment: "setVoucherDetail",
-    values: [
-      BigNumberish,
-      string,
-      string,
-      BigNumberish,
-      BigNumberish,
-      string,
-      BigNumberish,
-      boolean
-    ]
-  ): string;
   encodeFunctionData(
     functionFragment: "balanceOfBatch",
     values: [string[], BigNumberish[]]
@@ -98,15 +89,15 @@ export interface IKApmNftVoucherInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "setVoucherDetail",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "safeBatchTransferFrom",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "isBlacklist",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setVoucherDetail",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -140,8 +131,8 @@ export interface IKApmNftVoucherInterface extends utils.Interface {
     "UnregisterBlacklist(address)": EventFragment;
     "RegisterUuidBlacklist(string)": EventFragment;
     "UnregisterUuidBlacklist(string)": EventFragment;
-    "SetVoucherDetail(uint256,string,string,uint256,uint256,string,uint256,bool)": EventFragment;
-    "RedeemVoucher(uint256,uint256,uint256,string,uint256,uint256,string,uint256,address)": EventFragment;
+    "SetVoucherDetail(uint256,string,string,uint256,uint256,bool)": EventFragment;
+    "RedeemVoucher(uint256,uint256,uint256,string,uint256,uint256,address)": EventFragment;
     "TransferSingle(address,address,address,uint256,uint256)": EventFragment;
     "TransferBatch(address,address,address,uint256[],uint256[])": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
@@ -196,14 +187,12 @@ export type UnregisterUuidBlacklistEventFilter =
   TypedEventFilter<UnregisterUuidBlacklistEvent>;
 
 export type SetVoucherDetailEvent = TypedEvent<
-  [BigNumber, string, string, BigNumber, BigNumber, string, BigNumber, boolean],
+  [BigNumber, string, string, BigNumber, BigNumber, boolean],
   {
     tokenId: BigNumber;
     name: string;
     description: string;
     voucherFormatId: BigNumber;
-    faceValue: BigNumber;
-    currencyCode: string;
     expireAt: BigNumber;
     redeemAvailable: boolean;
   }
@@ -213,25 +202,13 @@ export type SetVoucherDetailEventFilter =
   TypedEventFilter<SetVoucherDetailEvent>;
 
 export type RedeemVoucherEvent = TypedEvent<
-  [
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    string,
-    BigNumber,
-    BigNumber,
-    string,
-    BigNumber,
-    string
-  ],
+  [BigNumber, BigNumber, BigNumber, string, BigNumber, BigNumber, string],
   {
     redeemId: BigNumber;
     tokenId: BigNumber;
     amount: BigNumber;
     userUuid: string;
     voucherFormatId: BigNumber;
-    faceValue: BigNumber;
-    currencyCode: string;
     expireAt: BigNumber;
     sender: string;
   }
@@ -324,6 +301,16 @@ export interface IKApmNftVoucher extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    setVoucherDetail(
+      tokenId: BigNumberish,
+      title: string,
+      description: string,
+      voucherFormatId: BigNumberish,
+      expireAt: BigNumberish,
+      redeemAvailable: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     safeBatchTransferFrom(
       from: string,
       to: string,
@@ -334,18 +321,6 @@ export interface IKApmNftVoucher extends BaseContract {
     ): Promise<ContractTransaction>;
 
     isBlacklist(account: string, overrides?: CallOverrides): Promise<[boolean]>;
-
-    setVoucherDetail(
-      tokenId: BigNumberish,
-      title: string,
-      description: string,
-      voucherFormatId: BigNumberish,
-      faceValue: BigNumberish,
-      currencyCode: string,
-      expireAt: BigNumberish,
-      redeemAvailable: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
 
     balanceOfBatch(
       accounts: string[],
@@ -361,9 +336,7 @@ export interface IKApmNftVoucher extends BaseContract {
     voucherInfo(
       tokenId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<
-      [string, string, BigNumber, BigNumber, BigNumber, boolean, boolean]
-    >;
+    ): Promise<[string, string, BigNumber, BigNumber, boolean, boolean]>;
 
     setApprovalForAll(
       operator: string,
@@ -405,6 +378,16 @@ export interface IKApmNftVoucher extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  setVoucherDetail(
+    tokenId: BigNumberish,
+    title: string,
+    description: string,
+    voucherFormatId: BigNumberish,
+    expireAt: BigNumberish,
+    redeemAvailable: boolean,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   safeBatchTransferFrom(
     from: string,
     to: string,
@@ -415,18 +398,6 @@ export interface IKApmNftVoucher extends BaseContract {
   ): Promise<ContractTransaction>;
 
   isBlacklist(account: string, overrides?: CallOverrides): Promise<boolean>;
-
-  setVoucherDetail(
-    tokenId: BigNumberish,
-    title: string,
-    description: string,
-    voucherFormatId: BigNumberish,
-    faceValue: BigNumberish,
-    currencyCode: string,
-    expireAt: BigNumberish,
-    redeemAvailable: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
 
   balanceOfBatch(
     accounts: string[],
@@ -439,9 +410,7 @@ export interface IKApmNftVoucher extends BaseContract {
   voucherInfo(
     tokenId: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<
-    [string, string, BigNumber, BigNumber, BigNumber, boolean, boolean]
-  >;
+  ): Promise<[string, string, BigNumber, BigNumber, boolean, boolean]>;
 
   setApprovalForAll(
     operator: string,
@@ -483,6 +452,16 @@ export interface IKApmNftVoucher extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    setVoucherDetail(
+      tokenId: BigNumberish,
+      title: string,
+      description: string,
+      voucherFormatId: BigNumberish,
+      expireAt: BigNumberish,
+      redeemAvailable: boolean,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     safeBatchTransferFrom(
       from: string,
       to: string,
@@ -493,18 +472,6 @@ export interface IKApmNftVoucher extends BaseContract {
     ): Promise<void>;
 
     isBlacklist(account: string, overrides?: CallOverrides): Promise<boolean>;
-
-    setVoucherDetail(
-      tokenId: BigNumberish,
-      title: string,
-      description: string,
-      voucherFormatId: BigNumberish,
-      faceValue: BigNumberish,
-      currencyCode: string,
-      expireAt: BigNumberish,
-      redeemAvailable: boolean,
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     balanceOfBatch(
       accounts: string[],
@@ -517,9 +484,7 @@ export interface IKApmNftVoucher extends BaseContract {
     voucherInfo(
       tokenId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<
-      [string, string, BigNumber, BigNumber, BigNumber, boolean, boolean]
-    >;
+    ): Promise<[string, string, BigNumber, BigNumber, boolean, boolean]>;
 
     setApprovalForAll(
       operator: string,
@@ -577,13 +542,11 @@ export interface IKApmNftVoucher extends BaseContract {
       uuid?: string | null
     ): UnregisterUuidBlacklistEventFilter;
 
-    "SetVoucherDetail(uint256,string,string,uint256,uint256,string,uint256,bool)"(
+    "SetVoucherDetail(uint256,string,string,uint256,uint256,bool)"(
       tokenId?: BigNumberish | null,
       name?: null,
       description?: null,
       voucherFormatId?: BigNumberish | null,
-      faceValue?: BigNumberish | null,
-      currencyCode?: null,
       expireAt?: null,
       redeemAvailable?: null
     ): SetVoucherDetailEventFilter;
@@ -592,20 +555,16 @@ export interface IKApmNftVoucher extends BaseContract {
       name?: null,
       description?: null,
       voucherFormatId?: BigNumberish | null,
-      faceValue?: BigNumberish | null,
-      currencyCode?: null,
       expireAt?: null,
       redeemAvailable?: null
     ): SetVoucherDetailEventFilter;
 
-    "RedeemVoucher(uint256,uint256,uint256,string,uint256,uint256,string,uint256,address)"(
+    "RedeemVoucher(uint256,uint256,uint256,string,uint256,uint256,address)"(
       redeemId?: null,
       tokenId?: BigNumberish | null,
       amount?: null,
       userUuid?: null,
       voucherFormatId?: BigNumberish | null,
-      faceValue?: null,
-      currencyCode?: null,
       expireAt?: null,
       sender?: string | null
     ): RedeemVoucherEventFilter;
@@ -615,8 +574,6 @@ export interface IKApmNftVoucher extends BaseContract {
       amount?: null,
       userUuid?: null,
       voucherFormatId?: BigNumberish | null,
-      faceValue?: null,
-      currencyCode?: null,
       expireAt?: null,
       sender?: string | null
     ): RedeemVoucherEventFilter;
@@ -688,6 +645,16 @@ export interface IKApmNftVoucher extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    setVoucherDetail(
+      tokenId: BigNumberish,
+      title: string,
+      description: string,
+      voucherFormatId: BigNumberish,
+      expireAt: BigNumberish,
+      redeemAvailable: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     safeBatchTransferFrom(
       from: string,
       to: string,
@@ -698,18 +665,6 @@ export interface IKApmNftVoucher extends BaseContract {
     ): Promise<BigNumber>;
 
     isBlacklist(account: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    setVoucherDetail(
-      tokenId: BigNumberish,
-      title: string,
-      description: string,
-      voucherFormatId: BigNumberish,
-      faceValue: BigNumberish,
-      currencyCode: string,
-      expireAt: BigNumberish,
-      redeemAvailable: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
 
     balanceOfBatch(
       accounts: string[],
@@ -768,6 +723,16 @@ export interface IKApmNftVoucher extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    setVoucherDetail(
+      tokenId: BigNumberish,
+      title: string,
+      description: string,
+      voucherFormatId: BigNumberish,
+      expireAt: BigNumberish,
+      redeemAvailable: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     safeBatchTransferFrom(
       from: string,
       to: string,
@@ -780,18 +745,6 @@ export interface IKApmNftVoucher extends BaseContract {
     isBlacklist(
       account: string,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    setVoucherDetail(
-      tokenId: BigNumberish,
-      title: string,
-      description: string,
-      voucherFormatId: BigNumberish,
-      faceValue: BigNumberish,
-      currencyCode: string,
-      expireAt: BigNumberish,
-      redeemAvailable: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     balanceOfBatch(

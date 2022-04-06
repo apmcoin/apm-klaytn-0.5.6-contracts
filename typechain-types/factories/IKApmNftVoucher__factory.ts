@@ -78,6 +78,40 @@ const _abi = [
     constant: false,
     inputs: [
       {
+        name: "tokenId",
+        type: "uint256",
+      },
+      {
+        name: "title",
+        type: "string",
+      },
+      {
+        name: "description",
+        type: "string",
+      },
+      {
+        name: "voucherFormatId",
+        type: "uint256",
+      },
+      {
+        name: "expireAt",
+        type: "uint256",
+      },
+      {
+        name: "redeemAvailable",
+        type: "bool",
+      },
+    ],
+    name: "setVoucherDetail",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    constant: false,
+    inputs: [
+      {
         name: "from",
         type: "address",
       },
@@ -121,48 +155,6 @@ const _abi = [
     ],
     payable: false,
     stateMutability: "view",
-    type: "function",
-  },
-  {
-    constant: false,
-    inputs: [
-      {
-        name: "tokenId",
-        type: "uint256",
-      },
-      {
-        name: "title",
-        type: "string",
-      },
-      {
-        name: "description",
-        type: "string",
-      },
-      {
-        name: "voucherFormatId",
-        type: "uint256",
-      },
-      {
-        name: "faceValue",
-        type: "uint256",
-      },
-      {
-        name: "currencyCode",
-        type: "string",
-      },
-      {
-        name: "expireAt",
-        type: "uint256",
-      },
-      {
-        name: "redeemAvailable",
-        type: "bool",
-      },
-    ],
-    name: "setVoucherDetail",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -224,10 +216,6 @@ const _abi = [
       {
         name: "",
         type: "string",
-      },
-      {
-        name: "",
-        type: "uint256",
       },
       {
         name: "",
@@ -405,16 +393,6 @@ const _abi = [
         type: "uint256",
       },
       {
-        indexed: true,
-        name: "faceValue",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        name: "currencyCode",
-        type: "string",
-      },
-      {
         indexed: false,
         name: "expireAt",
         type: "uint256",
@@ -455,16 +433,6 @@ const _abi = [
         indexed: true,
         name: "voucherFormatId",
         type: "uint256",
-      },
-      {
-        indexed: false,
-        name: "faceValue",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        name: "currencyCode",
-        type: "string",
       },
       {
         indexed: false,

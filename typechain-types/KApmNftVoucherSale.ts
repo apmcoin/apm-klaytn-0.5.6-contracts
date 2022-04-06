@@ -20,29 +20,29 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 export interface KApmNftVoucherSaleInterface extends utils.Interface {
   functions: {
     "feeTo()": FunctionFragment;
-    "getSaleName()": FunctionFragment;
+    "nftVoucher()": FunctionFragment;
+    "tokenId()": FunctionFragment;
     "removeWhitelist(address[])": FunctionFragment;
-    "getSaleLimit()": FunctionFragment;
-    "setSaleTokenId(uint256)": FunctionFragment;
+    "saleDescription()": FunctionFragment;
     "setApmCoin(address)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
+    "saleLimit()": FunctionFragment;
+    "apmPerNft()": FunctionFragment;
+    "saleName()": FunctionFragment;
     "owner()": FunctionFragment;
     "isOwner()": FunctionFragment;
-    "getSaleTokenId()": FunctionFragment;
-    "getApmCoin()": FunctionFragment;
-    "getStep()": FunctionFragment;
-    "getNftVoucher()": FunctionFragment;
+    "saleCount()": FunctionFragment;
     "setSaleName(string)": FunctionFragment;
-    "getApmPerNft()": FunctionFragment;
     "setNftVoucher(address)": FunctionFragment;
-    "getSaleCount()": FunctionFragment;
     "setSaleCount(uint256)": FunctionFragment;
     "isWhitelist(address)": FunctionFragment;
+    "setTokenId(uint256)": FunctionFragment;
     "setApmPerNft(uint256)": FunctionFragment;
+    "apmCoin()": FunctionFragment;
     "buy(uint256,uint256)": FunctionFragment;
     "setSaleLimit(uint256)": FunctionFragment;
+    "step()": FunctionFragment;
     "addWhitelist(address[])": FunctionFragment;
-    "getSaleDescription()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "setFeeTo(address)": FunctionFragment;
     "setStep(uint256)": FunctionFragment;
@@ -51,53 +51,33 @@ export interface KApmNftVoucherSaleInterface extends utils.Interface {
 
   encodeFunctionData(functionFragment: "feeTo", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "getSaleName",
+    functionFragment: "nftVoucher",
     values?: undefined
   ): string;
+  encodeFunctionData(functionFragment: "tokenId", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "removeWhitelist",
     values: [string[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "getSaleLimit",
+    functionFragment: "saleDescription",
     values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setSaleTokenId",
-    values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "setApmCoin", values: [string]): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
   ): string;
+  encodeFunctionData(functionFragment: "saleLimit", values?: undefined): string;
+  encodeFunctionData(functionFragment: "apmPerNft", values?: undefined): string;
+  encodeFunctionData(functionFragment: "saleName", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(functionFragment: "isOwner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "getSaleTokenId",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getApmCoin",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "getStep", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "getNftVoucher",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: "saleCount", values?: undefined): string;
   encodeFunctionData(functionFragment: "setSaleName", values: [string]): string;
-  encodeFunctionData(
-    functionFragment: "getApmPerNft",
-    values?: undefined
-  ): string;
   encodeFunctionData(
     functionFragment: "setNftVoucher",
     values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getSaleCount",
-    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "setSaleCount",
@@ -105,9 +85,14 @@ export interface KApmNftVoucherSaleInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "isWhitelist", values: [string]): string;
   encodeFunctionData(
+    functionFragment: "setTokenId",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "setApmPerNft",
     values: [BigNumberish]
   ): string;
+  encodeFunctionData(functionFragment: "apmCoin", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "buy",
     values: [BigNumberish, BigNumberish]
@@ -116,13 +101,10 @@ export interface KApmNftVoucherSaleInterface extends utils.Interface {
     functionFragment: "setSaleLimit",
     values: [BigNumberish]
   ): string;
+  encodeFunctionData(functionFragment: "step", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "addWhitelist",
     values: [string[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getSaleDescription",
-    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
@@ -139,20 +121,14 @@ export interface KApmNftVoucherSaleInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(functionFragment: "feeTo", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getSaleName",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: "nftVoucher", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "tokenId", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "removeWhitelist",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getSaleLimit",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setSaleTokenId",
+    functionFragment: "saleDescription",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "setApmCoin", data: BytesLike): Result;
@@ -160,32 +136,18 @@ export interface KApmNftVoucherSaleInterface extends utils.Interface {
     functionFragment: "renounceOwnership",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "saleLimit", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "apmPerNft", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "saleName", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "isOwner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getSaleTokenId",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "getApmCoin", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "getStep", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getNftVoucher",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: "saleCount", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "setSaleName",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getApmPerNft",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "setNftVoucher",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getSaleCount",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -196,21 +158,20 @@ export interface KApmNftVoucherSaleInterface extends utils.Interface {
     functionFragment: "isWhitelist",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "setTokenId", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "setApmPerNft",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "apmCoin", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "buy", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "setSaleLimit",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "step", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "addWhitelist",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getSaleDescription",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -225,11 +186,84 @@ export interface KApmNftVoucherSaleInterface extends utils.Interface {
   ): Result;
 
   events: {
+    "SetApmCoin(address)": EventFragment;
+    "SetNftVoucher(address)": EventFragment;
+    "SetFeeTo(address)": EventFragment;
+    "SetTokenId(uint256)": EventFragment;
+    "SetApmPerNft(uint256)": EventFragment;
+    "SetStep(uint256)": EventFragment;
+    "SetSaleLimit(uint256)": EventFragment;
+    "SetSaleCount(uint256)": EventFragment;
+    "SetSaleName(string)": EventFragment;
+    "SetSaleDescription(string)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: "SetApmCoin"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SetNftVoucher"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SetFeeTo"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SetTokenId"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SetApmPerNft"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SetStep"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SetSaleLimit"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SetSaleCount"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SetSaleName"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SetSaleDescription"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
 }
+
+export type SetApmCoinEvent = TypedEvent<[string], { apmCoinAddress: string }>;
+
+export type SetApmCoinEventFilter = TypedEventFilter<SetApmCoinEvent>;
+
+export type SetNftVoucherEvent = TypedEvent<
+  [string],
+  { apmCoinAddress: string }
+>;
+
+export type SetNftVoucherEventFilter = TypedEventFilter<SetNftVoucherEvent>;
+
+export type SetFeeToEvent = TypedEvent<[string], { feeTo: string }>;
+
+export type SetFeeToEventFilter = TypedEventFilter<SetFeeToEvent>;
+
+export type SetTokenIdEvent = TypedEvent<[BigNumber], { tokenId: BigNumber }>;
+
+export type SetTokenIdEventFilter = TypedEventFilter<SetTokenIdEvent>;
+
+export type SetApmPerNftEvent = TypedEvent<
+  [BigNumber],
+  { apmPerNft: BigNumber }
+>;
+
+export type SetApmPerNftEventFilter = TypedEventFilter<SetApmPerNftEvent>;
+
+export type SetStepEvent = TypedEvent<[BigNumber], { step: BigNumber }>;
+
+export type SetStepEventFilter = TypedEventFilter<SetStepEvent>;
+
+export type SetSaleLimitEvent = TypedEvent<[BigNumber], { step: BigNumber }>;
+
+export type SetSaleLimitEventFilter = TypedEventFilter<SetSaleLimitEvent>;
+
+export type SetSaleCountEvent = TypedEvent<
+  [BigNumber],
+  { saleCount: BigNumber }
+>;
+
+export type SetSaleCountEventFilter = TypedEventFilter<SetSaleCountEvent>;
+
+export type SetSaleNameEvent = TypedEvent<[string], { saleName: string }>;
+
+export type SetSaleNameEventFilter = TypedEventFilter<SetSaleNameEvent>;
+
+export type SetSaleDescriptionEvent = TypedEvent<
+  [string],
+  { saleDescription: string }
+>;
+
+export type SetSaleDescriptionEventFilter =
+  TypedEventFilter<SetSaleDescriptionEvent>;
 
 export type OwnershipTransferredEvent = TypedEvent<
   [string, string],
@@ -268,22 +302,19 @@ export interface KApmNftVoucherSale extends BaseContract {
   functions: {
     feeTo(overrides?: CallOverrides): Promise<[string]>;
 
-    getSaleName(overrides?: CallOverrides): Promise<[string]>;
+    nftVoucher(overrides?: CallOverrides): Promise<[string]>;
+
+    tokenId(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     removeWhitelist(
       wallets: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    getSaleLimit(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    setSaleTokenId(
-      nftTokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    saleDescription(overrides?: CallOverrides): Promise<[string]>;
 
     setApmCoin(
-      apmCoinAddress: string,
+      _apmCoin: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -291,43 +322,46 @@ export interface KApmNftVoucherSale extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    saleLimit(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    apmPerNft(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    saleName(overrides?: CallOverrides): Promise<[string]>;
+
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     isOwner(overrides?: CallOverrides): Promise<[boolean]>;
 
-    getSaleTokenId(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    getApmCoin(overrides?: CallOverrides): Promise<[string]>;
-
-    getStep(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    getNftVoucher(overrides?: CallOverrides): Promise<[string]>;
+    saleCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     setSaleName(
-      saleNameValue: string,
+      _saleName: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
-
-    getApmPerNft(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     setNftVoucher(
-      nftVoucherAddress: string,
+      _nftVoucher: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    getSaleCount(overrides?: CallOverrides): Promise<[BigNumber]>;
-
     setSaleCount(
-      saleCountValue: BigNumberish,
+      _saleCount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     isWhitelist(wallet: string, overrides?: CallOverrides): Promise<[boolean]>;
 
-    setApmPerNft(
-      apmPerNftValue: BigNumberish,
+    setTokenId(
+      _tokenId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    setApmPerNft(
+      _apmPerNft: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    apmCoin(overrides?: CallOverrides): Promise<[string]>;
 
     buy(
       _buyCount: BigNumberish,
@@ -336,16 +370,16 @@ export interface KApmNftVoucherSale extends BaseContract {
     ): Promise<ContractTransaction>;
 
     setSaleLimit(
-      saleLimitValue: BigNumberish,
+      _saleLimit: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    step(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     addWhitelist(
       wallets: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
-
-    getSaleDescription(overrides?: CallOverrides): Promise<[string]>;
 
     transferOwnership(
       newOwner: string,
@@ -353,39 +387,36 @@ export interface KApmNftVoucherSale extends BaseContract {
     ): Promise<ContractTransaction>;
 
     setFeeTo(
-      feeToAddress: string,
+      _feeTo: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     setStep(
-      stepValue: BigNumberish,
+      _step: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     setSaleDescription(
-      saleDescriptionValue: string,
+      _saleDescription: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
 
   feeTo(overrides?: CallOverrides): Promise<string>;
 
-  getSaleName(overrides?: CallOverrides): Promise<string>;
+  nftVoucher(overrides?: CallOverrides): Promise<string>;
+
+  tokenId(overrides?: CallOverrides): Promise<BigNumber>;
 
   removeWhitelist(
     wallets: string[],
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  getSaleLimit(overrides?: CallOverrides): Promise<BigNumber>;
-
-  setSaleTokenId(
-    nftTokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  saleDescription(overrides?: CallOverrides): Promise<string>;
 
   setApmCoin(
-    apmCoinAddress: string,
+    _apmCoin: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -393,43 +424,46 @@ export interface KApmNftVoucherSale extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  saleLimit(overrides?: CallOverrides): Promise<BigNumber>;
+
+  apmPerNft(overrides?: CallOverrides): Promise<BigNumber>;
+
+  saleName(overrides?: CallOverrides): Promise<string>;
+
   owner(overrides?: CallOverrides): Promise<string>;
 
   isOwner(overrides?: CallOverrides): Promise<boolean>;
 
-  getSaleTokenId(overrides?: CallOverrides): Promise<BigNumber>;
-
-  getApmCoin(overrides?: CallOverrides): Promise<string>;
-
-  getStep(overrides?: CallOverrides): Promise<BigNumber>;
-
-  getNftVoucher(overrides?: CallOverrides): Promise<string>;
+  saleCount(overrides?: CallOverrides): Promise<BigNumber>;
 
   setSaleName(
-    saleNameValue: string,
+    _saleName: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
-
-  getApmPerNft(overrides?: CallOverrides): Promise<BigNumber>;
 
   setNftVoucher(
-    nftVoucherAddress: string,
+    _nftVoucher: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  getSaleCount(overrides?: CallOverrides): Promise<BigNumber>;
-
   setSaleCount(
-    saleCountValue: BigNumberish,
+    _saleCount: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   isWhitelist(wallet: string, overrides?: CallOverrides): Promise<boolean>;
 
-  setApmPerNft(
-    apmPerNftValue: BigNumberish,
+  setTokenId(
+    _tokenId: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  setApmPerNft(
+    _apmPerNft: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  apmCoin(overrides?: CallOverrides): Promise<string>;
 
   buy(
     _buyCount: BigNumberish,
@@ -438,16 +472,16 @@ export interface KApmNftVoucherSale extends BaseContract {
   ): Promise<ContractTransaction>;
 
   setSaleLimit(
-    saleLimitValue: BigNumberish,
+    _saleLimit: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  step(overrides?: CallOverrides): Promise<BigNumber>;
 
   addWhitelist(
     wallets: string[],
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
-
-  getSaleDescription(overrides?: CallOverrides): Promise<string>;
 
   transferOwnership(
     newOwner: string,
@@ -455,81 +489,75 @@ export interface KApmNftVoucherSale extends BaseContract {
   ): Promise<ContractTransaction>;
 
   setFeeTo(
-    feeToAddress: string,
+    _feeTo: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   setStep(
-    stepValue: BigNumberish,
+    _step: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   setSaleDescription(
-    saleDescriptionValue: string,
+    _saleDescription: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     feeTo(overrides?: CallOverrides): Promise<string>;
 
-    getSaleName(overrides?: CallOverrides): Promise<string>;
+    nftVoucher(overrides?: CallOverrides): Promise<string>;
+
+    tokenId(overrides?: CallOverrides): Promise<BigNumber>;
 
     removeWhitelist(
       wallets: string[],
       overrides?: CallOverrides
     ): Promise<void>;
 
-    getSaleLimit(overrides?: CallOverrides): Promise<BigNumber>;
+    saleDescription(overrides?: CallOverrides): Promise<string>;
 
-    setSaleTokenId(
-      nftTokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    setApmCoin(
-      apmCoinAddress: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setApmCoin(_apmCoin: string, overrides?: CallOverrides): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
+
+    saleLimit(overrides?: CallOverrides): Promise<BigNumber>;
+
+    apmPerNft(overrides?: CallOverrides): Promise<BigNumber>;
+
+    saleName(overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
     isOwner(overrides?: CallOverrides): Promise<boolean>;
 
-    getSaleTokenId(overrides?: CallOverrides): Promise<BigNumber>;
+    saleCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getApmCoin(overrides?: CallOverrides): Promise<string>;
-
-    getStep(overrides?: CallOverrides): Promise<BigNumber>;
-
-    getNftVoucher(overrides?: CallOverrides): Promise<string>;
-
-    setSaleName(
-      saleNameValue: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    getApmPerNft(overrides?: CallOverrides): Promise<BigNumber>;
+    setSaleName(_saleName: string, overrides?: CallOverrides): Promise<void>;
 
     setNftVoucher(
-      nftVoucherAddress: string,
+      _nftVoucher: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    getSaleCount(overrides?: CallOverrides): Promise<BigNumber>;
-
     setSaleCount(
-      saleCountValue: BigNumberish,
+      _saleCount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     isWhitelist(wallet: string, overrides?: CallOverrides): Promise<boolean>;
 
-    setApmPerNft(
-      apmPerNftValue: BigNumberish,
+    setTokenId(
+      _tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    setApmPerNft(
+      _apmPerNft: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    apmCoin(overrides?: CallOverrides): Promise<string>;
 
     buy(
       _buyCount: BigNumberish,
@@ -538,30 +566,66 @@ export interface KApmNftVoucherSale extends BaseContract {
     ): Promise<void>;
 
     setSaleLimit(
-      saleLimitValue: BigNumberish,
+      _saleLimit: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    addWhitelist(wallets: string[], overrides?: CallOverrides): Promise<void>;
+    step(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getSaleDescription(overrides?: CallOverrides): Promise<string>;
+    addWhitelist(wallets: string[], overrides?: CallOverrides): Promise<void>;
 
     transferOwnership(
       newOwner: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setFeeTo(feeToAddress: string, overrides?: CallOverrides): Promise<void>;
+    setFeeTo(_feeTo: string, overrides?: CallOverrides): Promise<void>;
 
-    setStep(stepValue: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setStep(_step: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     setSaleDescription(
-      saleDescriptionValue: string,
+      _saleDescription: string,
       overrides?: CallOverrides
     ): Promise<void>;
   };
 
   filters: {
+    "SetApmCoin(address)"(
+      apmCoinAddress?: string | null
+    ): SetApmCoinEventFilter;
+    SetApmCoin(apmCoinAddress?: string | null): SetApmCoinEventFilter;
+
+    "SetNftVoucher(address)"(
+      apmCoinAddress?: string | null
+    ): SetNftVoucherEventFilter;
+    SetNftVoucher(apmCoinAddress?: string | null): SetNftVoucherEventFilter;
+
+    "SetFeeTo(address)"(feeTo?: string | null): SetFeeToEventFilter;
+    SetFeeTo(feeTo?: string | null): SetFeeToEventFilter;
+
+    "SetTokenId(uint256)"(tokenId?: null): SetTokenIdEventFilter;
+    SetTokenId(tokenId?: null): SetTokenIdEventFilter;
+
+    "SetApmPerNft(uint256)"(apmPerNft?: null): SetApmPerNftEventFilter;
+    SetApmPerNft(apmPerNft?: null): SetApmPerNftEventFilter;
+
+    "SetStep(uint256)"(step?: null): SetStepEventFilter;
+    SetStep(step?: null): SetStepEventFilter;
+
+    "SetSaleLimit(uint256)"(step?: null): SetSaleLimitEventFilter;
+    SetSaleLimit(step?: null): SetSaleLimitEventFilter;
+
+    "SetSaleCount(uint256)"(saleCount?: null): SetSaleCountEventFilter;
+    SetSaleCount(saleCount?: null): SetSaleCountEventFilter;
+
+    "SetSaleName(string)"(saleName?: null): SetSaleNameEventFilter;
+    SetSaleName(saleName?: null): SetSaleNameEventFilter;
+
+    "SetSaleDescription(string)"(
+      saleDescription?: null
+    ): SetSaleDescriptionEventFilter;
+    SetSaleDescription(saleDescription?: null): SetSaleDescriptionEventFilter;
+
     "OwnershipTransferred(address,address)"(
       previousOwner?: string | null,
       newOwner?: string | null
@@ -575,22 +639,19 @@ export interface KApmNftVoucherSale extends BaseContract {
   estimateGas: {
     feeTo(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getSaleName(overrides?: CallOverrides): Promise<BigNumber>;
+    nftVoucher(overrides?: CallOverrides): Promise<BigNumber>;
+
+    tokenId(overrides?: CallOverrides): Promise<BigNumber>;
 
     removeWhitelist(
       wallets: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    getSaleLimit(overrides?: CallOverrides): Promise<BigNumber>;
-
-    setSaleTokenId(
-      nftTokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    saleDescription(overrides?: CallOverrides): Promise<BigNumber>;
 
     setApmCoin(
-      apmCoinAddress: string,
+      _apmCoin: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -598,43 +659,46 @@ export interface KApmNftVoucherSale extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    saleLimit(overrides?: CallOverrides): Promise<BigNumber>;
+
+    apmPerNft(overrides?: CallOverrides): Promise<BigNumber>;
+
+    saleName(overrides?: CallOverrides): Promise<BigNumber>;
+
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     isOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getSaleTokenId(overrides?: CallOverrides): Promise<BigNumber>;
-
-    getApmCoin(overrides?: CallOverrides): Promise<BigNumber>;
-
-    getStep(overrides?: CallOverrides): Promise<BigNumber>;
-
-    getNftVoucher(overrides?: CallOverrides): Promise<BigNumber>;
+    saleCount(overrides?: CallOverrides): Promise<BigNumber>;
 
     setSaleName(
-      saleNameValue: string,
+      _saleName: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
-
-    getApmPerNft(overrides?: CallOverrides): Promise<BigNumber>;
 
     setNftVoucher(
-      nftVoucherAddress: string,
+      _nftVoucher: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    getSaleCount(overrides?: CallOverrides): Promise<BigNumber>;
-
     setSaleCount(
-      saleCountValue: BigNumberish,
+      _saleCount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     isWhitelist(wallet: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    setApmPerNft(
-      apmPerNftValue: BigNumberish,
+    setTokenId(
+      _tokenId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    setApmPerNft(
+      _apmPerNft: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    apmCoin(overrides?: CallOverrides): Promise<BigNumber>;
 
     buy(
       _buyCount: BigNumberish,
@@ -643,16 +707,16 @@ export interface KApmNftVoucherSale extends BaseContract {
     ): Promise<BigNumber>;
 
     setSaleLimit(
-      saleLimitValue: BigNumberish,
+      _saleLimit: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    step(overrides?: CallOverrides): Promise<BigNumber>;
 
     addWhitelist(
       wallets: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
-
-    getSaleDescription(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: string,
@@ -660,17 +724,17 @@ export interface KApmNftVoucherSale extends BaseContract {
     ): Promise<BigNumber>;
 
     setFeeTo(
-      feeToAddress: string,
+      _feeTo: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     setStep(
-      stepValue: BigNumberish,
+      _step: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     setSaleDescription(
-      saleDescriptionValue: string,
+      _saleDescription: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
   };
@@ -678,22 +742,19 @@ export interface KApmNftVoucherSale extends BaseContract {
   populateTransaction: {
     feeTo(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getSaleName(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    nftVoucher(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    tokenId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     removeWhitelist(
       wallets: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    getSaleLimit(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    setSaleTokenId(
-      nftTokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    saleDescription(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setApmCoin(
-      apmCoinAddress: string,
+      _apmCoin: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -701,34 +762,30 @@ export interface KApmNftVoucherSale extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    saleLimit(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    apmPerNft(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    saleName(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getSaleTokenId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    getApmCoin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    getStep(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    getNftVoucher(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    saleCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setSaleName(
-      saleNameValue: string,
+      _saleName: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
-
-    getApmPerNft(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setNftVoucher(
-      nftVoucherAddress: string,
+      _nftVoucher: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    getSaleCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     setSaleCount(
-      saleCountValue: BigNumberish,
+      _saleCount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -737,10 +794,17 @@ export interface KApmNftVoucherSale extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    setApmPerNft(
-      apmPerNftValue: BigNumberish,
+    setTokenId(
+      _tokenId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
+
+    setApmPerNft(
+      _apmPerNft: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    apmCoin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     buy(
       _buyCount: BigNumberish,
@@ -749,17 +813,15 @@ export interface KApmNftVoucherSale extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     setSaleLimit(
-      saleLimitValue: BigNumberish,
+      _saleLimit: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
+
+    step(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addWhitelist(
       wallets: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    getSaleDescription(
-      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
@@ -768,17 +830,17 @@ export interface KApmNftVoucherSale extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     setFeeTo(
-      feeToAddress: string,
+      _feeTo: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     setStep(
-      stepValue: BigNumberish,
+      _step: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     setSaleDescription(
-      saleDescriptionValue: string,
+      _saleDescription: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };

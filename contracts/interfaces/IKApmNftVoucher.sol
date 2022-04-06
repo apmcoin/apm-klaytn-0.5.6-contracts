@@ -51,7 +51,6 @@ contract IKApmNftVoucher is IKIP37 {
             string memory,
             uint256,
             uint256,
-            uint256,
             bool,
             bool
     );

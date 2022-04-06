@@ -10,18 +10,82 @@ export interface IKApmNftVoucherSaleInterface extends utils.Interface {
   functions: {};
 
   events: {
-    "SetApmKrwPrice(address,uint256)": EventFragment;
+    "SetApmCoin(address)": EventFragment;
+    "SetNftVoucher(address)": EventFragment;
+    "SetFeeTo(address)": EventFragment;
+    "SetTokenId(uint256)": EventFragment;
+    "SetApmPerNft(uint256)": EventFragment;
+    "SetStep(uint256)": EventFragment;
+    "SetSaleLimit(uint256)": EventFragment;
+    "SetSaleCount(uint256)": EventFragment;
+    "SetSaleName(string)": EventFragment;
+    "SetSaleDescription(string)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "SetApmKrwPrice"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SetApmCoin"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SetNftVoucher"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SetFeeTo"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SetTokenId"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SetApmPerNft"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SetStep"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SetSaleLimit"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SetSaleCount"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SetSaleName"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SetSaleDescription"): EventFragment;
 }
 
-export type SetApmKrwPriceEvent = TypedEvent<
-  [string, BigNumber],
-  { account: string; price: BigNumber }
+export type SetApmCoinEvent = TypedEvent<[string], { apmCoinAddress: string }>;
+
+export type SetApmCoinEventFilter = TypedEventFilter<SetApmCoinEvent>;
+
+export type SetNftVoucherEvent = TypedEvent<
+  [string],
+  { apmCoinAddress: string }
 >;
 
-export type SetApmKrwPriceEventFilter = TypedEventFilter<SetApmKrwPriceEvent>;
+export type SetNftVoucherEventFilter = TypedEventFilter<SetNftVoucherEvent>;
+
+export type SetFeeToEvent = TypedEvent<[string], { feeTo: string }>;
+
+export type SetFeeToEventFilter = TypedEventFilter<SetFeeToEvent>;
+
+export type SetTokenIdEvent = TypedEvent<[BigNumber], { tokenId: BigNumber }>;
+
+export type SetTokenIdEventFilter = TypedEventFilter<SetTokenIdEvent>;
+
+export type SetApmPerNftEvent = TypedEvent<
+  [BigNumber],
+  { apmPerNft: BigNumber }
+>;
+
+export type SetApmPerNftEventFilter = TypedEventFilter<SetApmPerNftEvent>;
+
+export type SetStepEvent = TypedEvent<[BigNumber], { step: BigNumber }>;
+
+export type SetStepEventFilter = TypedEventFilter<SetStepEvent>;
+
+export type SetSaleLimitEvent = TypedEvent<[BigNumber], { step: BigNumber }>;
+
+export type SetSaleLimitEventFilter = TypedEventFilter<SetSaleLimitEvent>;
+
+export type SetSaleCountEvent = TypedEvent<
+  [BigNumber],
+  { saleCount: BigNumber }
+>;
+
+export type SetSaleCountEventFilter = TypedEventFilter<SetSaleCountEvent>;
+
+export type SetSaleNameEvent = TypedEvent<[string], { saleName: string }>;
+
+export type SetSaleNameEventFilter = TypedEventFilter<SetSaleNameEvent>;
+
+export type SetSaleDescriptionEvent = TypedEvent<
+  [string],
+  { saleDescription: string }
+>;
+
+export type SetSaleDescriptionEventFilter =
+  TypedEventFilter<SetSaleDescriptionEvent>;
 
 export interface IKApmNftVoucherSale extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -54,14 +118,41 @@ export interface IKApmNftVoucherSale extends BaseContract {
   callStatic: {};
 
   filters: {
-    "SetApmKrwPrice(address,uint256)"(
-      account?: string | null,
-      price?: null
-    ): SetApmKrwPriceEventFilter;
-    SetApmKrwPrice(
-      account?: string | null,
-      price?: null
-    ): SetApmKrwPriceEventFilter;
+    "SetApmCoin(address)"(
+      apmCoinAddress?: string | null
+    ): SetApmCoinEventFilter;
+    SetApmCoin(apmCoinAddress?: string | null): SetApmCoinEventFilter;
+
+    "SetNftVoucher(address)"(
+      apmCoinAddress?: string | null
+    ): SetNftVoucherEventFilter;
+    SetNftVoucher(apmCoinAddress?: string | null): SetNftVoucherEventFilter;
+
+    "SetFeeTo(address)"(feeTo?: string | null): SetFeeToEventFilter;
+    SetFeeTo(feeTo?: string | null): SetFeeToEventFilter;
+
+    "SetTokenId(uint256)"(tokenId?: null): SetTokenIdEventFilter;
+    SetTokenId(tokenId?: null): SetTokenIdEventFilter;
+
+    "SetApmPerNft(uint256)"(apmPerNft?: null): SetApmPerNftEventFilter;
+    SetApmPerNft(apmPerNft?: null): SetApmPerNftEventFilter;
+
+    "SetStep(uint256)"(step?: null): SetStepEventFilter;
+    SetStep(step?: null): SetStepEventFilter;
+
+    "SetSaleLimit(uint256)"(step?: null): SetSaleLimitEventFilter;
+    SetSaleLimit(step?: null): SetSaleLimitEventFilter;
+
+    "SetSaleCount(uint256)"(saleCount?: null): SetSaleCountEventFilter;
+    SetSaleCount(saleCount?: null): SetSaleCountEventFilter;
+
+    "SetSaleName(string)"(saleName?: null): SetSaleNameEventFilter;
+    SetSaleName(saleName?: null): SetSaleNameEventFilter;
+
+    "SetSaleDescription(string)"(
+      saleDescription?: null
+    ): SetSaleDescriptionEventFilter;
+    SetSaleDescription(saleDescription?: null): SetSaleDescriptionEventFilter;
   };
 
   estimateGas: {};

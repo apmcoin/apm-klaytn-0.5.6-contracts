@@ -14,22 +14,125 @@ const _abi = [
     inputs: [
       {
         indexed: true,
-        name: "account",
+        name: "apmCoinAddress",
         type: "address",
       },
+    ],
+    name: "SetApmCoin",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: "apmCoinAddress",
+        type: "address",
+      },
+    ],
+    name: "SetNftVoucher",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: "feeTo",
+        type: "address",
+      },
+    ],
+    name: "SetFeeTo",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
       {
         indexed: false,
-        name: "price",
+        name: "tokenId",
         type: "uint256",
       },
     ],
-    name: "SetApmKrwPrice",
+    name: "SetTokenId",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: "apmPerNft",
+        type: "uint256",
+      },
+    ],
+    name: "SetApmPerNft",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: "step",
+        type: "uint256",
+      },
+    ],
+    name: "SetStep",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: "step",
+        type: "uint256",
+      },
+    ],
+    name: "SetSaleLimit",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: "saleCount",
+        type: "uint256",
+      },
+    ],
+    name: "SetSaleCount",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: "saleName",
+        type: "string",
+      },
+    ],
+    name: "SetSaleName",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: "saleDescription",
+        type: "string",
+      },
+    ],
+    name: "SetSaleDescription",
     type: "event",
   },
 ];
 
 const _bytecode =
-  "0x6080604052348015600f57600080fd5b50603580601d6000396000f3fe6080604052600080fdfea165627a7a72305820eff34e6fb079751a3714d8308b5c2c1a1ce664bea408df12d3c9b6de452568550029";
+  "0x6080604052348015600f57600080fd5b50603580601d6000396000f3fe6080604052600080fdfea165627a7a72305820f1e275c2c6494186c775cb94b192e90393447b5f9b1676363a40af4b309e57ca0029";
 
 type IKApmNftVoucherSaleConstructorParams =
   | [signer?: Signer]
