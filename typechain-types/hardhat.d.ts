@@ -29,6 +29,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IKApmNftVoucherSale__factory>;
     getContractFactory(
+      name: "KApmBatchTransfer",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.KApmBatchTransfer__factory>;
+    getContractFactory(
       name: "KApmCoin",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.KApmCoin__factory>;
@@ -44,6 +48,10 @@ declare module "hardhat/types/runtime" {
       name: "KBpmCoin",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.KBpmCoin__factory>;
+    getContractFactory(
+      name: "KlayBatchTransfer",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.KlayBatchTransfer__factory>;
     getContractFactory(
       name: "MinterRole",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -338,6 +346,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IKApmNftVoucherSale>;
     getContractAt(
+      name: "KApmBatchTransfer",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.KApmBatchTransfer>;
+    getContractAt(
       name: "KApmCoin",
       address: string,
       signer?: ethers.Signer
@@ -357,6 +370,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.KBpmCoin>;
+    getContractAt(
+      name: "KlayBatchTransfer",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.KlayBatchTransfer>;
     getContractAt(
       name: "MinterRole",
       address: string,
