@@ -11,7 +11,6 @@ contract IKApmNftVoucherSale {
     event SetApmPerNft(uint256 apmPerNft);
     event SetStep(uint256 step);
     event SetSaleLimit(uint256 step);
-    event SetSaleCount(uint256 saleCount);
     event SetSaleName(string saleName);
     event SetSaleDescription(string saleDescription);
 }

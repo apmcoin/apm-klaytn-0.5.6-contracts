@@ -54,4 +54,10 @@ Mainnet:
 
 
 **sale**
+1. `setStep(uint256)`
+- 1 : waiting for sale
+- 2 : sale
+- 3 : sold out (Automatic setting when sold out)
+ 
+
 
