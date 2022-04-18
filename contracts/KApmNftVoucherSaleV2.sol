@@ -3,15 +3,21 @@ pragma solidity ^0.5.6;
 //import "hardhat/console.sol";
 import "./klaytn-contracts/ownership/Ownable.sol";
 import "./klaytn-contracts/math/SafeMath.sol";
-//import "./klaytn-contracts/token/KIP37/KIP37.sol";
-//import "./klaytn-contracts/token/KIP7/KIP7.sol";
-import "./interfaces/IKApmNftVoucherSale.sol";
-import "./klaytn-contracts/token/KIP37/KIP37Mintable.sol";
+import "./interfaces/IKApmNftVoucherSaleV2.sol";
 
-contract KApmNftVoucherSale is Ownable, IKApmNftVoucherSale {
+contract INftVoucher is IKApmNftVoucher{
+    function mint(
+        uint256 _id,
+        address _to,
+        uint256 _value
+    ) public;
+}
+
+contract KApmNftVoucherSale is Ownable, IKApmNftVoucherSaleV2 {
     using SafeMath for uint256;
+    //uint256 MAX_INT = 2**256 - 1;
     IKApmCoin public apmCoin;
-    KIP37Mintable public nftVoucher;
+    INftVoucher public nftVoucher;
     address public feeTo;
     uint256 public tokenId;
     uint256 public apmPerNft = 25 * 1e18;
@@ -24,7 +30,7 @@ contract KApmNftVoucherSale is Ownable, IKApmNftVoucherSale {
 
     constructor(
         IKApmCoin _apmCoin,
-        KIP37Mintable _nftVoucher,
+        INftVoucher _nftVoucher,
         address _feeToAddress,
         uint256 _tokenId,
         uint256 _saleLimit,
@@ -47,7 +53,7 @@ contract KApmNftVoucherSale is Ownable, IKApmNftVoucherSale {
         emit SetApmCoin(address(apmCoin));
     }
 
-    function setNftVoucher(KIP37Mintable _nftVoucher) public onlyOwner {
+    function setNftVoucher(INftVoucher _nftVoucher) public onlyOwner {
         nftVoucher = _nftVoucher;
         emit SetNftVoucher(address(nftVoucher));
     }
@@ -73,6 +79,7 @@ contract KApmNftVoucherSale is Ownable, IKApmNftVoucherSale {
     }
 
     function setSaleLimit(uint256 _saleLimit) public onlyOwner {
+        require(_saleLimit > saleCount, "saleLimit must be greater than saleCount.");
         saleLimit = _saleLimit;
         emit SetSaleLimit(saleLimit);
     }
@@ -103,7 +110,7 @@ contract KApmNftVoucherSale is Ownable, IKApmNftVoucherSale {
         }
     }
 
-    function buy(uint256 _buyCount, uint256 _apmAmount) external {
+    function buy(uint256 _buyCount, uint256 _apmAmount) public {
         require(_buyCount > 0, "Need _buyCount");
         require(_apmAmount > 0, "Need _apmAmount");
         require(step == 1, "It's not on sale.");
@@ -124,4 +131,8 @@ contract KApmNftVoucherSale is Ownable, IKApmNftVoucherSale {
             setStep(2);
         }
     }
+
+    //function buyAndRedeem(uint256 _buyCount, uint256 _apmAmount) public {
+        //uint256 allowanceAmount = apmCoin.allowance(msg.sender, address(this));
+    //}
 }
