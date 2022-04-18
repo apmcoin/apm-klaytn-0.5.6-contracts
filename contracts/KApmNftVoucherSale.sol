@@ -77,11 +77,6 @@ contract KApmNftVoucherSale is Ownable, IKApmNftVoucherSale {
         emit SetSaleLimit(saleLimit);
     }
 
-    function setSaleCount(uint256 _saleCount) public onlyOwner {
-        saleCount = _saleCount;
-         emit SetSaleCount(saleCount);
-    }
-
     function setSaleName(string memory _saleName) public onlyOwner {
         saleName = _saleName;
         emit SetSaleName(saleName);
