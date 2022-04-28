@@ -20,14 +20,15 @@ contract KApmNftVoucherSale is Ownable, ManagerRole, IKApmNftVoucherLimitSale {
     INftVoucher public nftVoucher;
     address public feeTo;
     uint256 public tokenId;
-    uint256 public apmPerNft = 1000 * 1e18;
+    uint256 public apmPerNft = 1 * 1e18;
     uint256 public step = 0;
     uint256 public saleLimit = 0;
     uint256 public saleCount = 0;
     string public saleName;
     string public saleDescription;
-    bool public usingWhitelist;
+    bool public usingWhitelist = false;
     mapping(address => bool) private _whitelist;
+    mapping(address => uint256) private _buyLimitPerAddress;
 
     constructor(
         IKApmCoin _apmCoin,
@@ -36,8 +37,7 @@ contract KApmNftVoucherSale is Ownable, ManagerRole, IKApmNftVoucherLimitSale {
         uint256 _tokenId,
         uint256 _saleLimit,
         string memory _saleName,
-        string memory _saleDescription,
-        bool _usingWhitelist
+        string memory _saleDescription
         )
         public
     {
@@ -48,7 +48,6 @@ contract KApmNftVoucherSale is Ownable, ManagerRole, IKApmNftVoucherLimitSale {
         setSaleLimit(_saleLimit);
         setSaleName(_saleName);
         setSaleDescription(_saleDescription);
-        setUsingWhitelist(_usingWhitelist);
     }
 
     function setApmCoin(IKApmCoin _apmCoin) public onlyOwner {
@@ -100,6 +99,16 @@ contract KApmNftVoucherSale is Ownable, ManagerRole, IKApmNftVoucherLimitSale {
     function setUsingWhitelist(bool _usingWhitelist) public onlyManager{
         usingWhitelist = _usingWhitelist;
         emit SetUsingWhitelist(usingWhitelist);
+    }
+
+    function buyLimitPerAddress(address wallet) public view returns (uint256){
+        return _buyLimitPerAddress[wallet];
+    }
+
+    function setBuyLimitPerAddress(address[] calldata wallets, uint256[] calldata buyLimits) external onlyManager {
+        for (uint256 i = 0; i < wallets.length; i = i.add(1)) {
+            _buyLimitPerAddress[wallets[i]] = buyLimits[i];
+        }
     }
 
     function isWhitelist(address wallet) public view returns (bool){
