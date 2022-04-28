@@ -131,6 +131,7 @@ contract KApmNftVoucherSale is Ownable, ManagerRole, IKApmNftVoucherLimitSale {
     }
 
     function buy(uint256 _buyCount, uint256 _apmAmount) public {
+        require(_buyCount <= _buyLimitPerAddress[msg.sender], "Buy limit exceeded");
         require(_buyCount > 0, "Need _buyCount");
         require(_apmAmount > 0, "Need _apmAmount");
         require(step == 1, "It's not on sale.");
@@ -146,6 +147,7 @@ contract KApmNftVoucherSale is Ownable, ManagerRole, IKApmNftVoucherLimitSale {
 
         saleCount = calSaleCount;
         nftVoucher.mint(tokenId, msg.sender, _buyCount);
+        _buyLimitPerAddress[msg.sender] = _buyLimitPerAddress[msg.sender].sub(_buyCount);
 
         if(saleCount == saleLimit){
             setStep(2);
