@@ -87,17 +87,17 @@ contract KApmNftVoucherSale is Ownable, ManagerRole, IKApmNftVoucherLimitSale {
         emit SetSaleLimit(saleLimit);
     }
 
-    function setSaleName(string memory _saleName) public onlyOwner {
+    function setSaleName(string memory _saleName) public onlyManager {
         saleName = _saleName;
         emit SetSaleName(saleName);
     }
 
-    function setSaleDescription(string memory _saleDescription) public onlyOwner {
+    function setSaleDescription(string memory _saleDescription) public onlyManager {
         saleDescription = _saleDescription;
         emit SetSaleDescription(saleDescription);
     }
 
-    function setUsingWhitelist(bool _usingWhitelist) public onlyOwner{
+    function setUsingWhitelist(bool _usingWhitelist) public onlyManager{
         usingWhitelist = _usingWhitelist;
         emit SetUsingWhitelist(usingWhitelist);
     }
@@ -106,16 +106,16 @@ contract KApmNftVoucherSale is Ownable, ManagerRole, IKApmNftVoucherLimitSale {
         if(usingWhitelist){
             return _whitelist[wallet];
         }
-        return true;    
+        return true;
     }
 
-    function addWhitelist(address[] calldata wallets) external onlyOwner {
+    function addWhitelist(address[] calldata wallets) external onlyManager {
         for (uint256 i = 0; i < wallets.length; i = i.add(1)) {
             _whitelist[wallets[i]] = true;
         }
     }
 
-    function removeWhitelist(address[] calldata wallets) external onlyOwner {
+    function removeWhitelist(address[] calldata wallets) external onlyManager {
         for (uint256 i = 0; i < wallets.length; i = i.add(1)) {
             _whitelist[wallets[i]] = false;
         }
