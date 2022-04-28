@@ -13,4 +13,5 @@ contract IKApmNftVoucherLimitSale {
     event SetSaleLimit(uint256 step);
     event SetSaleName(string saleName);
     event SetSaleDescription(string saleDescription);
+    event SetUsingWhitelist(bool usingWhitelist);
 }

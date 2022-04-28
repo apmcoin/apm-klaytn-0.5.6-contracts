@@ -4,6 +4,7 @@ pragma solidity ^0.5.6;
 import "./klaytn-contracts/ownership/Ownable.sol";
 import "./klaytn-contracts/math/SafeMath.sol";
 import "./interfaces/IKApmNftVoucherLimitSale.sol";
+import "./utils/ManagerRole.sol";
 
 contract INftVoucher is IKApmNftVoucher{
     function mint(
@@ -13,18 +14,19 @@ contract INftVoucher is IKApmNftVoucher{
     ) public;
 }
 
-contract KApmNftVoucherSale is Ownable, IKApmNftVoucherLimitSale {
+contract KApmNftVoucherSale is Ownable, ManagerRole, IKApmNftVoucherLimitSale {
     using SafeMath for uint256;
     IKApmCoin public apmCoin;
     INftVoucher public nftVoucher;
     address public feeTo;
     uint256 public tokenId;
-    uint256 public apmPerNft = 25 * 1e18;
+    uint256 public apmPerNft = 1000 * 1e18;
     uint256 public step = 0;
     uint256 public saleLimit = 0;
     uint256 public saleCount = 0;
     string public saleName;
     string public saleDescription;
+    bool public usingWhitelist;
     mapping(address => bool) private _whitelist;
 
     constructor(
@@ -34,7 +36,8 @@ contract KApmNftVoucherSale is Ownable, IKApmNftVoucherLimitSale {
         uint256 _tokenId,
         uint256 _saleLimit,
         string memory _saleName,
-        string memory _saleDescription
+        string memory _saleDescription,
+        bool _usingWhitelist
         )
         public
     {
@@ -45,6 +48,7 @@ contract KApmNftVoucherSale is Ownable, IKApmNftVoucherLimitSale {
         setSaleLimit(_saleLimit);
         setSaleName(_saleName);
         setSaleDescription(_saleDescription);
+        setUsingWhitelist(_usingWhitelist);
     }
 
     function setApmCoin(IKApmCoin _apmCoin) public onlyOwner {
@@ -93,8 +97,16 @@ contract KApmNftVoucherSale is Ownable, IKApmNftVoucherLimitSale {
         emit SetSaleDescription(saleDescription);
     }
 
+    function setUsingWhitelist(bool _usingWhitelist) public onlyOwner{
+        usingWhitelist = _usingWhitelist;
+        emit SetUsingWhitelist(usingWhitelist);
+    }
+
     function isWhitelist(address wallet) public view returns (bool){
-        return _whitelist[wallet];
+        if(usingWhitelist){
+            return _whitelist[wallet];
+        }
+        return true;    
     }
 
     function addWhitelist(address[] calldata wallets) external onlyOwner {
