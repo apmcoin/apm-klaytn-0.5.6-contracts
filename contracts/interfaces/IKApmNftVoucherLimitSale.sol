@@ -3,7 +3,7 @@ pragma solidity ^0.5.6;
 import "./IKApmNftVoucher.sol";
 import "./IKApmCoin.sol";
 
-contract IKApmNftVoucherSaleV2 {
+contract IKApmNftVoucherLimitSale {
     event SetApmCoin(address indexed apmCoinAddress);
     event SetNftVoucher(address indexed apmCoinAddress);
     event SetFeeTo(address indexed feeTo);

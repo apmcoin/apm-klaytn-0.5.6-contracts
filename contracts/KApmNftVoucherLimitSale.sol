@@ -3,7 +3,7 @@ pragma solidity ^0.5.6;
 //import "hardhat/console.sol";
 import "./klaytn-contracts/ownership/Ownable.sol";
 import "./klaytn-contracts/math/SafeMath.sol";
-import "./interfaces/IKApmNftVoucherSaleV2.sol";
+import "./interfaces/IKApmNftVoucherLimitSale.sol";
 
 contract INftVoucher is IKApmNftVoucher{
     function mint(
@@ -13,9 +13,8 @@ contract INftVoucher is IKApmNftVoucher{
     ) public;
 }
 
-contract KApmNftVoucherSale is Ownable, IKApmNftVoucherSaleV2 {
+contract KApmNftVoucherSale is Ownable, IKApmNftVoucherLimitSale {
     using SafeMath for uint256;
-    //uint256 MAX_INT = 2**256 - 1;
     IKApmCoin public apmCoin;
     INftVoucher public nftVoucher;
     address public feeTo;
