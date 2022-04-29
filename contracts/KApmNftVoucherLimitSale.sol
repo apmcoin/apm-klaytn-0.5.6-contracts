@@ -154,7 +154,8 @@ contract KApmNftVoucherSale is Ownable, ManagerRole, IKApmNftVoucherLimitSale {
         }
     }
 
-    //function buyAndRedeem(uint256 _buyCount, uint256 _apmAmount) public {
-        //uint256 allowanceAmount = apmCoin.allowance(msg.sender, address(this));
-    //}
+    function buyAndRedeem(uint256 _buyCount, uint256 _apmAmount, string memory _userUuid) public {
+        buy(_buyCount, _apmAmount);
+        nftVoucher.redeemVoucher(tokenId, _buyCount, _userUuid);
+    }
 }
