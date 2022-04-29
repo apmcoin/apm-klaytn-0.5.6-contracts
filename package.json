@@ -14,5 +14,8 @@
     "hardhat-gas-reporter": "^1.0.6",
     "solidity-coverage": "^0.7.17",
     "ts-node": "^10.4.0"
+  },
+  "dependencies": {
+    "hardhat-abi-exporter": "^2.9.0"
   }
 }

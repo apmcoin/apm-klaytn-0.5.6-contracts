@@ -1,0 +1,122 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "apmCoinAddress",
+        "type": "address"
+      }
+    ],
+    "name": "SetApmCoin",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "apmCoinAddress",
+        "type": "address"
+      }
+    ],
+    "name": "SetNftVoucher",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "feeTo",
+        "type": "address"
+      }
+    ],
+    "name": "SetFeeTo",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "SetTokenId",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "apmPerNft",
+        "type": "uint256"
+      }
+    ],
+    "name": "SetApmPerNft",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "step",
+        "type": "uint256"
+      }
+    ],
+    "name": "SetStep",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "step",
+        "type": "uint256"
+      }
+    ],
+    "name": "SetSaleLimit",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "saleName",
+        "type": "string"
+      }
+    ],
+    "name": "SetSaleName",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "saleDescription",
+        "type": "string"
+      }
+    ],
+    "name": "SetSaleDescription",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "usingWhitelist",
+        "type": "bool"
+      }
+    ],
+    "name": "SetUsingWhitelist",
+    "type": "event"
+  }
+]

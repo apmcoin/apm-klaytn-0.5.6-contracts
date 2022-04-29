@@ -6,6 +6,7 @@ import "@nomiclabs/hardhat-waffle";
 import "@typechain/hardhat";
 import "hardhat-gas-reporter";
 import "solidity-coverage";
+import "hardhat-abi-exporter";
 
 dotenv.config();
 
@@ -48,7 +49,14 @@ const config: HardhatUserConfig = {
   },
   mocha:{
     timeout: 100000
+  },
+  abiExporter: {
+    path: './abi',
+    runOnCompile: true,
+    clear: true,
+    pretty: false
   }
+  
 };
 
 export default config;

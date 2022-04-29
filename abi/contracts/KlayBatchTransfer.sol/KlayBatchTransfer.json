@@ -1,0 +1,20 @@
+[
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_toList",
+        "type": "address[]"
+      },
+      {
+        "name": "_valueList",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "batchTransfer",
+    "outputs": [],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  }
+]
