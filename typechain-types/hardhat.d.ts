@@ -25,6 +25,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IKApmNftVoucher__factory>;
     getContractFactory(
+      name: "IKApmNftVoucherLimitSale",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IKApmNftVoucherLimitSale__factory>;
+    getContractFactory(
       name: "IKApmNftVoucherSale",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IKApmNftVoucherSale__factory>;
@@ -40,6 +44,14 @@ declare module "hardhat/types/runtime" {
       name: "KApmNftVoucher",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.KApmNftVoucher__factory>;
+    getContractFactory(
+      name: "INftVoucher",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.INftVoucher__factory>;
+    getContractFactory(
+      name: "KApmNftVoucherSale",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.KApmNftVoucherSale__factory>;
     getContractFactory(
       name: "KApmNftVoucherSale",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -324,6 +336,10 @@ declare module "hardhat/types/runtime" {
       name: "SampleNFT",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.SampleNFT__factory>;
+    getContractFactory(
+      name: "ManagerRole",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ManagerRole__factory>;
 
     getContractAt(
       name: "BatchRedeemVoucher",
@@ -340,6 +356,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IKApmNftVoucher>;
+    getContractAt(
+      name: "IKApmNftVoucherLimitSale",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IKApmNftVoucherLimitSale>;
     getContractAt(
       name: "IKApmNftVoucherSale",
       address: string,
@@ -360,6 +381,16 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.KApmNftVoucher>;
+    getContractAt(
+      name: "INftVoucher",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.INftVoucher>;
+    getContractAt(
+      name: "KApmNftVoucherSale",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.KApmNftVoucherSale>;
     getContractAt(
       name: "KApmNftVoucherSale",
       address: string,
@@ -715,6 +746,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.SampleNFT>;
+    getContractAt(
+      name: "ManagerRole",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ManagerRole>;
 
     // default types
     getContractFactory(
