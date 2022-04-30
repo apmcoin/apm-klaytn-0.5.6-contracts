@@ -14,7 +14,7 @@ contract INftVoucher is IKApmNftVoucher{
     ) public;
 }
 
-contract KApmNftVoucherSale is Ownable, ManagerRole, IKApmNftVoucherLimitSale {
+contract KApmNftVoucherLimitSale is Ownable, ManagerRole, IKApmNftVoucherLimitSale {
     using SafeMath for uint256;
     IKApmCoin public apmCoin;
     INftVoucher public nftVoucher;

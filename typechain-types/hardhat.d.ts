@@ -49,6 +49,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.INftVoucher__factory>;
     getContractFactory(
+      name: "KApmNftVoucherLimitSale",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.KApmNftVoucherLimitSale__factory>;
+    getContractFactory(
       name: "KApmNftVoucherSale",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.KApmNftVoucherSale__factory>;
@@ -386,6 +390,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.INftVoucher>;
+    getContractAt(
+      name: "KApmNftVoucherLimitSale",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.KApmNftVoucherLimitSale>;
     getContractAt(
       name: "KApmNftVoucherSale",
       address: string,

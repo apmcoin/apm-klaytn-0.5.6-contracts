@@ -10,6 +10,7 @@ export type { KApmBatchTransfer } from "./KApmBatchTransfer";
 export type { KApmCoin } from "./KApmCoin";
 export type { KApmNftVoucher } from "./KApmNftVoucher";
 export type { INftVoucher } from "./INftVoucher";
+export type { KApmNftVoucherLimitSale } from "./KApmNftVoucherLimitSale";
 export type { KApmNftVoucherSale } from "./KApmNftVoucherSale";
 export type { KBpmCoin } from "./KBpmCoin";
 export type { KlayBatchTransfer } from "./KlayBatchTransfer";
@@ -92,6 +93,7 @@ export { KApmBatchTransfer__factory } from "./factories/KApmBatchTransfer__facto
 export { KApmCoin__factory } from "./factories/KApmCoin__factory";
 export { KApmNftVoucher__factory } from "./factories/KApmNftVoucher__factory";
 export { INftVoucher__factory } from "./factories/INftVoucher__factory";
+export { KApmNftVoucherLimitSale__factory } from "./factories/KApmNftVoucherLimitSale__factory";
 export { KApmNftVoucherSale__factory } from "./factories/KApmNftVoucherSale__factory";
 export { KBpmCoin__factory } from "./factories/KBpmCoin__factory";
 export { KlayBatchTransfer__factory } from "./factories/KlayBatchTransfer__factory";

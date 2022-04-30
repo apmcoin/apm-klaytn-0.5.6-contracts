@@ -11,7 +11,7 @@ describe("Contract", function () {
     
     //계약 객체 생성
     const SaleForStaff = await ethers.getContractFactory("KApmNftVoucherSale");
-    const SaleForVip = await ethers.getContractFactory("KApmNftVoucherSale");
+    const SaleForVip = await ethers.getContractFactory("KApmNftVoucherLimitSale");
     const APM = await ethers.getContractFactory("KApmCoin");
     const NFT = await ethers.getContractFactory("KApmNftVoucher");
     
@@ -42,7 +42,7 @@ describe("Contract", function () {
       nft.address,
       fomotech.address,
       2,
-      1000,
+      10000,
       "VIP 세일 제목",
       "VIP 세일 상세\n\nVIP 세일 상세 한줄더"
       );
