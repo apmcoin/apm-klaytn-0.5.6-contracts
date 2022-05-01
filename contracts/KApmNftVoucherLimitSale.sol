@@ -20,7 +20,7 @@ contract KApmNftVoucherLimitSale is Ownable, ManagerRole, IKApmNftVoucherLimitSa
     INftVoucher public nftVoucher;
     address public feeTo;
     uint256 public tokenId;
-    uint256 public apmPerNft = 1 * 1e18;
+    uint256 public apmPerNft = 25 * 1e18;
     uint256 public step = 0;
     uint256 public saleLimit = 0;
     uint256 public saleCount = 0;
@@ -131,11 +131,11 @@ contract KApmNftVoucherLimitSale is Ownable, ManagerRole, IKApmNftVoucherLimitSa
     }
 
     function buy(uint256 _buyCount, uint256 _apmAmount) public {
-        require(_buyCount <= _buyLimitPerAddress[msg.sender], "Buy limit exceeded");
         require(_buyCount > 0, "Need _buyCount");
         require(_apmAmount > 0, "Need _apmAmount");
         require(step == 1, "It's not on sale.");
         require(isWhitelist(msg.sender), "It's not on the whitelist.");
+        require(_buyCount <= _buyLimitPerAddress[msg.sender], "Buy limit exceeded");
 
         uint256 calSaleCount = saleCount.add(_buyCount);
         require(calSaleCount <= saleLimit, "Sales NFT is insufficient.");
