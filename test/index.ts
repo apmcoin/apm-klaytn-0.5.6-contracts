@@ -101,16 +101,12 @@ describe("Contract", function () {
     await saleForVip.setBuyLimitPerAddress([minter.address],[10000]);
 
     await saleForVip.buy(buyAmount, apmPerNft.mul(buyAmount));
-    //await nft.redeemVoucher(2, buyAmount, "tetete");
-    console.log("민터 밸런스 : " + await nft.balanceOf(minter.address, 2));
+    await nft.redeemVoucher(2, buyAmount, "tetete");
 
     await saleForVip.buyAndRedeem(buyAmount, apmPerNft.mul(buyAmount), "testuuid");
 
-    //await expect(saleForVip.buyAndRedeem(1, apmPerNft, "testuuid2")).to.be.revertedWith("It's not on sale.");
-    //expect(await saleForVip.step()).to.be.equal(2);
-
-
-
+    await expect(saleForVip.buyAndRedeem(1, apmPerNft, "testuuid2")).to.be.revertedWith("It's not on sale.");
+    expect(await saleForVip.step()).to.be.equal(2);
 
 
     //await expect(nft.mint(minter.address, 0)).to.be.revertedWith("Mint limit exceeded");

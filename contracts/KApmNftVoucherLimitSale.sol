@@ -3,6 +3,7 @@ pragma solidity ^0.5.6;
 //import "hardhat/console.sol";
 import "./klaytn-contracts/ownership/Ownable.sol";
 import "./klaytn-contracts/math/SafeMath.sol";
+import "./klaytn-contracts/token/KIP37/KIP37Holder.sol";
 import "./interfaces/IKApmNftVoucherLimitSale.sol";
 import "./utils/ManagerRole.sol";
 
@@ -14,7 +15,7 @@ contract INftVoucher is IKApmNftVoucher{
     ) public;
 }
 
-contract KApmNftVoucherLimitSale is Ownable, ManagerRole, IKApmNftVoucherLimitSale {
+contract KApmNftVoucherLimitSale is Ownable, ManagerRole, IKApmNftVoucherLimitSale, KIP37Holder {
     using SafeMath for uint256;
     IKApmCoin public apmCoin;
     INftVoucher public nftVoucher;

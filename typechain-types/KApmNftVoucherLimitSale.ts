@@ -20,6 +20,7 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 export interface KApmNftVoucherLimitSaleInterface extends utils.Interface {
   functions: {
     "feeTo()": FunctionFragment;
+    "supportsInterface(bytes4)": FunctionFragment;
     "nftVoucher()": FunctionFragment;
     "tokenId()": FunctionFragment;
     "setUsingWhitelist(bool)": FunctionFragment;
@@ -34,6 +35,7 @@ export interface KApmNftVoucherLimitSaleInterface extends utils.Interface {
     "saleName()": FunctionFragment;
     "owner()": FunctionFragment;
     "isOwner()": FunctionFragment;
+    "onKIP37BatchReceived(address,address,uint256[],uint256[],bytes)": FunctionFragment;
     "buyLimitPerAddress(address)": FunctionFragment;
     "saleCount()": FunctionFragment;
     "setBuyLimitPerAddress(address[],uint256[])": FunctionFragment;
@@ -47,6 +49,7 @@ export interface KApmNftVoucherLimitSaleInterface extends utils.Interface {
     "buy(uint256,uint256)": FunctionFragment;
     "setSaleLimit(uint256)": FunctionFragment;
     "step()": FunctionFragment;
+    "onKIP37Received(address,address,uint256,uint256,bytes)": FunctionFragment;
     "addWhitelist(address[])": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "isManager(address)": FunctionFragment;
@@ -57,6 +60,10 @@ export interface KApmNftVoucherLimitSaleInterface extends utils.Interface {
   };
 
   encodeFunctionData(functionFragment: "feeTo", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "supportsInterface",
+    values: [BytesLike]
+  ): string;
   encodeFunctionData(
     functionFragment: "nftVoucher",
     values?: undefined
@@ -89,6 +96,10 @@ export interface KApmNftVoucherLimitSaleInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "saleName", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(functionFragment: "isOwner", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "onKIP37BatchReceived",
+    values: [string, string, BigNumberish[], BigNumberish[], BytesLike]
+  ): string;
   encodeFunctionData(
     functionFragment: "buyLimitPerAddress",
     values: [string]
@@ -127,6 +138,10 @@ export interface KApmNftVoucherLimitSaleInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "step", values?: undefined): string;
   encodeFunctionData(
+    functionFragment: "onKIP37Received",
+    values: [string, string, BigNumberish, BigNumberish, BytesLike]
+  ): string;
+  encodeFunctionData(
     functionFragment: "addWhitelist",
     values: [string[]]
   ): string;
@@ -150,6 +165,10 @@ export interface KApmNftVoucherLimitSaleInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(functionFragment: "feeTo", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "supportsInterface",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "nftVoucher", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "tokenId", data: BytesLike): Result;
   decodeFunctionResult(
@@ -179,6 +198,10 @@ export interface KApmNftVoucherLimitSaleInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "saleName", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "isOwner", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "onKIP37BatchReceived",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "buyLimitPerAddress",
     data: BytesLike
@@ -216,6 +239,10 @@ export interface KApmNftVoucherLimitSaleInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "step", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "onKIP37Received",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "addWhitelist",
     data: BytesLike
@@ -366,6 +393,11 @@ export interface KApmNftVoucherLimitSale extends BaseContract {
   functions: {
     feeTo(overrides?: CallOverrides): Promise<[string]>;
 
+    supportsInterface(
+      interfaceId: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
     nftVoucher(overrides?: CallOverrides): Promise<[string]>;
 
     tokenId(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -407,6 +439,15 @@ export interface KApmNftVoucherLimitSale extends BaseContract {
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     isOwner(overrides?: CallOverrides): Promise<[boolean]>;
+
+    onKIP37BatchReceived(
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish[],
+      arg3: BigNumberish[],
+      arg4: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
     buyLimitPerAddress(
       wallet: string,
@@ -465,6 +506,15 @@ export interface KApmNftVoucherLimitSale extends BaseContract {
 
     step(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    onKIP37Received(
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish,
+      arg3: BigNumberish,
+      arg4: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     addWhitelist(
       wallets: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -498,6 +548,11 @@ export interface KApmNftVoucherLimitSale extends BaseContract {
   };
 
   feeTo(overrides?: CallOverrides): Promise<string>;
+
+  supportsInterface(
+    interfaceId: BytesLike,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
 
   nftVoucher(overrides?: CallOverrides): Promise<string>;
 
@@ -540,6 +595,15 @@ export interface KApmNftVoucherLimitSale extends BaseContract {
   owner(overrides?: CallOverrides): Promise<string>;
 
   isOwner(overrides?: CallOverrides): Promise<boolean>;
+
+  onKIP37BatchReceived(
+    arg0: string,
+    arg1: string,
+    arg2: BigNumberish[],
+    arg3: BigNumberish[],
+    arg4: BytesLike,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   buyLimitPerAddress(
     wallet: string,
@@ -598,6 +662,15 @@ export interface KApmNftVoucherLimitSale extends BaseContract {
 
   step(overrides?: CallOverrides): Promise<BigNumber>;
 
+  onKIP37Received(
+    arg0: string,
+    arg1: string,
+    arg2: BigNumberish,
+    arg3: BigNumberish,
+    arg4: BytesLike,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   addWhitelist(
     wallets: string[],
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -632,6 +705,11 @@ export interface KApmNftVoucherLimitSale extends BaseContract {
   callStatic: {
     feeTo(overrides?: CallOverrides): Promise<string>;
 
+    supportsInterface(
+      interfaceId: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
     nftVoucher(overrides?: CallOverrides): Promise<string>;
 
     tokenId(overrides?: CallOverrides): Promise<BigNumber>;
@@ -665,6 +743,15 @@ export interface KApmNftVoucherLimitSale extends BaseContract {
     owner(overrides?: CallOverrides): Promise<string>;
 
     isOwner(overrides?: CallOverrides): Promise<boolean>;
+
+    onKIP37BatchReceived(
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish[],
+      arg3: BigNumberish[],
+      arg4: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     buyLimitPerAddress(
       wallet: string,
@@ -719,6 +806,15 @@ export interface KApmNftVoucherLimitSale extends BaseContract {
     ): Promise<void>;
 
     step(overrides?: CallOverrides): Promise<BigNumber>;
+
+    onKIP37Received(
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish,
+      arg3: BigNumberish,
+      arg4: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     addWhitelist(wallets: string[], overrides?: CallOverrides): Promise<void>;
 
@@ -801,6 +897,11 @@ export interface KApmNftVoucherLimitSale extends BaseContract {
   estimateGas: {
     feeTo(overrides?: CallOverrides): Promise<BigNumber>;
 
+    supportsInterface(
+      interfaceId: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     nftVoucher(overrides?: CallOverrides): Promise<BigNumber>;
 
     tokenId(overrides?: CallOverrides): Promise<BigNumber>;
@@ -842,6 +943,15 @@ export interface KApmNftVoucherLimitSale extends BaseContract {
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     isOwner(overrides?: CallOverrides): Promise<BigNumber>;
+
+    onKIP37BatchReceived(
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish[],
+      arg3: BigNumberish[],
+      arg4: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
     buyLimitPerAddress(
       wallet: string,
@@ -900,6 +1010,15 @@ export interface KApmNftVoucherLimitSale extends BaseContract {
 
     step(overrides?: CallOverrides): Promise<BigNumber>;
 
+    onKIP37Received(
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish,
+      arg3: BigNumberish,
+      arg4: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     addWhitelist(
       wallets: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -934,6 +1053,11 @@ export interface KApmNftVoucherLimitSale extends BaseContract {
 
   populateTransaction: {
     feeTo(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    supportsInterface(
+      interfaceId: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     nftVoucher(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -976,6 +1100,15 @@ export interface KApmNftVoucherLimitSale extends BaseContract {
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    onKIP37BatchReceived(
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish[],
+      arg3: BigNumberish[],
+      arg4: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
     buyLimitPerAddress(
       wallet: string,
@@ -1036,6 +1169,15 @@ export interface KApmNftVoucherLimitSale extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     step(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    onKIP37Received(
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish,
+      arg3: BigNumberish,
+      arg4: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
     addWhitelist(
       wallets: string[],
