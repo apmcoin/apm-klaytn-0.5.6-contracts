@@ -77,9 +77,9 @@ describe("Contract", function () {
     let buyAmount = 10001;
 
     //민터 계약의 어프로브 수행
-    console.log("before:" + await apm.allowance(minter.address, saleForVip.address));
+    //console.log("before:" + await apm.allowance(minter.address, saleForVip.address));
     await apm.approve(saleForVip.address, "115792089237316195423570985008687907853269984665640564039457584007913129639935");
-    console.log("after:" + await apm.allowance(minter.address, saleForVip.address));
+    //console.log("after:" + await apm.allowance(minter.address, saleForVip.address));
  
     await expect(saleForVip.buy(buyAmount, apmPerNft.mul(buyAmount))).to.be.revertedWith("It's not on sale.");
     await saleForVip.setStep(1);
@@ -101,13 +101,18 @@ describe("Contract", function () {
     await saleForVip.setBuyLimitPerAddress([minter.address],[10000]);
 
     await saleForVip.buy(buyAmount, apmPerNft.mul(buyAmount));
-    await nft.redeemVoucher(2, buyAmount, "tetete");
+    //await nft.redeemVoucher(2, buyAmount, "tetete");
     console.log("민터 밸런스 : " + await nft.balanceOf(minter.address, 2));
 
     await saleForVip.buyAndRedeem(buyAmount, apmPerNft.mul(buyAmount), "testuuid");
 
-    await expect(saleForVip.buyAndRedeem(1, apmPerNft, "testuuid2")).to.be.revertedWith("It's not on sale.");
-    expect(await saleForVip.step()).to.be.equal(2);
+    //await expect(saleForVip.buyAndRedeem(1, apmPerNft, "testuuid2")).to.be.revertedWith("It's not on sale.");
+    //expect(await saleForVip.step()).to.be.equal(2);
+
+
+
+
+
     //await expect(nft.mint(minter.address, 0)).to.be.revertedWith("Mint limit exceeded");
 
     //세일리미트 설정 전 구매시도
