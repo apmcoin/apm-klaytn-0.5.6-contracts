@@ -155,7 +155,27 @@ contract KApmNftVoucherLimitSale is Ownable, ManagerRole, IKApmNftVoucherLimitSa
     }
 
     function buyAndRedeem(uint256 _buyCount, uint256 _apmAmount, string memory _userUuid) public {
-        buy(_buyCount, _apmAmount);
-        nftVoucher.redeemVoucher(tokenId, _buyCount, _userUuid);
+        require(_buyCount > 0, "Need _buyCount");
+        require(_apmAmount > 0, "Need _apmAmount");
+        require(step == 1, "It's not on sale.");
+        require(isWhitelist(msg.sender), "It's not on the whitelist.");
+        require(_buyCount <= _buyLimitPerAddress[msg.sender], "Buy limit exceeded");
+
+        uint256 calSaleCount = saleCount.add(_buyCount);
+        require(calSaleCount <= saleLimit, "Sales NFT is insufficient.");
+        uint256 calBuyApmAmount = _buyCount.mul(apmPerNft);
+        require(_apmAmount == calBuyApmAmount, "Either apmPerNft has changed or the input price is invalid.");
+        uint256 allowanceAmount = apmCoin.allowance(msg.sender, address(this));
+        require(_apmAmount <= allowanceAmount, "Need token approve");
+        apmCoin.transferFrom(msg.sender, feeTo, _apmAmount);
+
+        saleCount = calSaleCount;
+        nftVoucher.mint(tokenId, msg.sender, _buyCount);
+        _buyLimitPerAddress[msg.sender] = _buyLimitPerAddress[msg.sender].sub(_buyCount);
+
+        if(saleCount == saleLimit){
+            setStep(2);
+        }
     }
+    //nftVoucher.redeemVoucher(tokenId, 1, _userUuid);
 }
