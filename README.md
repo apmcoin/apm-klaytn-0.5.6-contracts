@@ -54,14 +54,15 @@ Mainnet:
 
 
 **sale**
-KApmNftVoucherSale : 임직원 세일
-KApmNftVoucherLimitSale : VIP세일
+(Deprecated)KApmNftVoucherSale : 임직원 세일에 사용
+KApmNftVoucherLimitSale : VIP세일에 사용
+1.
 
 1. `setStep(uint256)`
 - 0 : waiting for sale
 - 1 : sale
 - 2 : sold out (Automatic setting when sold out)
 2. Grant of minter role from NFT contract
-3.
+3. SetBuyLimitPerNft
 
 
