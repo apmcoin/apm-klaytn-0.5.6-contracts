@@ -5,12 +5,11 @@ import { ethers, waffle } from "hardhat";
 describe("Contract", function () {
   it("NFT Voucher Test", async function () {
     const provider = waffle.provider;
-    //const [minter] = await ethers.getSigners();
-    const [minter, staff1, staff2, vip1, vip2, user1, fomotech] = provider.getWallets();
+    
+    const [owner, vip, fomotech] = provider.getWallets();
     const ipfsEndpoint = "https://mock-endpoint/metadata/"
     
     //계약 객체 생성
-    //const SaleForStaff = await ethers.getContractFactory("KApmNftVoucherSale");
     const SaleForVip = await ethers.getContractFactory("KApmNftVoucherLimitSale");
     const APM = await ethers.getContractFactory("KApmCoin");
     const NFT = await ethers.getContractFactory("KApmNftVoucher");
@@ -18,24 +17,13 @@ describe("Contract", function () {
     //KIP-7 APM 배포
     const apm = await APM.deploy()
     await apm.deployed()
-    await apm.mint(minter.address, "10000000000000000000000000");
+
+    //vip 주소로 APM 지급
+    await apm.mint(vip.address, "10000000000000000000000000");
 
     //KIP-37 바우처 배포
     const nft = await NFT.deploy("ipfsEndpoint");
     await nft.deployed();
-
-    //임직원 세일 배포
-    /*const saleForStaff = await SaleForStaff.deploy(
-      apm.address,
-      nft.address,
-      fomotech.address,
-      2,
-      1000,
-      "임직원 세일 제목",
-      "임직원 세일 상세\n\n임직원 세일 상세 한줄더"
-      );
-    await saleForStaff.deployed();
-    */
 
     //VIP세일 배포
     const saleForVip = await SaleForVip.deploy(
@@ -59,53 +47,60 @@ describe("Contract", function () {
       "apM Open Event Voucher",
       "apM Members 서비스 오픈 기념 NFT Voucher\n\nWrapped by FOMO Tech",
       2,
-      1653922800, //22.06.30 UTC9 23:59:59
+      1753922800, //22.06.30 UTC9 23:59:59
       true
       ); 
     await setVoucherTx.wait();
 
-    //세일 계약에 민터 권한 설정
-    //expect(await nft.isMinter(saleForStaff.address)).to.be.equal(false);
+    //세일 계약이 민터 권한이 없는지 확인
     expect(await nft.isMinter(saleForVip.address)).to.be.equal(false);
-    //await nft.addMinter(saleForStaff.address);
+
+    //세일 계약에 민터 권한 설정
     await nft.addMinter(saleForVip.address);
-    //expect(await nft.isMinter(saleForStaff.address)).to.be.equal(true);
+
+    //세일 계약에 민터 권한이 있는지 확인
     expect(await nft.isMinter(saleForVip.address)).to.be.equal(true);
 
-    expect(await nft.balanceOf(minter.address, 2)).to.be.equal(0);
+    //vip가 가진 NFT가 없는지 확인
+    expect(await nft.balanceOf(vip.address, 2)).to.be.equal(0);
     let apmPerNft = await saleForVip.apmPerNft();
     let buyAmount = 10001;
 
-    //민터 계약의 어프로브 수행
-    //console.log("before:" + await apm.allowance(minter.address, saleForVip.address));
-    await apm.approve(saleForVip.address, "115792089237316195423570985008687907853269984665640564039457584007913129639935");
-    //console.log("after:" + await apm.allowance(minter.address, saleForVip.address));
+    //vip유저가 vip세일 계약에 토큰 어프로브 수행
+    await apm.connect(vip).approve(saleForVip.address, "115792089237316195423570985008687907853269984665640564039457584007913129639935");
  
-    await expect(saleForVip.buy(buyAmount, apmPerNft.mul(buyAmount))).to.be.revertedWith("It's not on sale.");
+    //vip유저가 세일 시작 전 구매 시도
+    await expect(saleForVip.connect(vip).buy(buyAmount, apmPerNft.mul(buyAmount))).to.be.revertedWith("It's not on sale.");
+
+    //오너가 세일 시작
     await saleForVip.setStep(1);
+
+    //오너가 화이트리스트 사용 설정
     await saleForVip.setUsingWhitelist(true);
 
-    await expect(saleForVip.buy(buyAmount, apmPerNft.mul(buyAmount))).to.be.revertedWith("It's not on the whitelist.");
-    //화이트리스트 예외
+    //vip유저가 화이트리스트 아님 예외
+    await expect(saleForVip.connect(vip).buy(buyAmount, apmPerNft.mul(buyAmount))).to.be.revertedWith("It's not on the whitelist.");
+
+    //오너가 화이트리스트 사용 해제 설정
     await saleForVip.setUsingWhitelist(false);
     //await saleForVip.addWhitelist([vip1.address, vip2.address]);
 
-    //지갑별 구매한도 초과
-    await expect(saleForVip.buy(buyAmount, apmPerNft.mul(buyAmount))).to.be.revertedWith("Buy limit exceeded");
-    await saleForVip.setBuyLimitPerAddress([minter.address],[20000]);
+    //vip유저가 지갑별 구매한도 초과
+    await expect(saleForVip.connect(vip).buy(buyAmount, apmPerNft.mul(buyAmount))).to.be.revertedWith("Buy limit exceeded");
 
-    //전체 구매한도 초과
-    await expect(saleForVip.buy(buyAmount, apmPerNft.mul(buyAmount))).to.be.revertedWith("Sales NFT is insufficient.");
+    //오너가 vip유저의 구매한도설정
+    await saleForVip.setBuyLimitPerAddress([vip.address],[20000]);
 
-    buyAmount = 5000;  
-    await saleForVip.setBuyLimitPerAddress([minter.address],[10000]);
+    //vip유저는 전체 구매한도 초과
+    await expect(saleForVip.connect(vip).buy(buyAmount, apmPerNft.mul(buyAmount))).to.be.revertedWith("Sales NFT is insufficient.");
 
-    await saleForVip.buy(buyAmount, apmPerNft.mul(buyAmount));
-    await nft.redeemVoucher(2, buyAmount, "tetete");
+    console.log("salecount 1:" + await saleForVip.saleCount());
+    await saleForVip.connect(vip).buy(buyAmount, apmPerNft.mul(buyAmount));
+    await nft.connect(vip).redeemVoucher(2, buyAmount, "test-uuid");
 
-    await saleForVip.buyAndRedeem(buyAmount, apmPerNft.mul(buyAmount), "testuuid");
-
-    await expect(saleForVip.buyAndRedeem(1, apmPerNft, "testuuid2")).to.be.revertedWith("It's not on sale.");
+    console.log("salecount2:" + await saleForVip.saleCount());
+    await saleForVip.connect(vip).buyAndRedeem(buyAmount, apmPerNft.mul(buyAmount), "test-uuid");
+    await expect(saleForVip.connect(vip).buyAndRedeem(1, apmPerNft, "testuuid2")).to.be.revertedWith("It's not on sale.");
     expect(await saleForVip.step()).to.be.equal(2);
 
 
