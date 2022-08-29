@@ -15,14 +15,14 @@ npx hardhat test
 
 ## KIP-7 apM Coin
 * apM Token for Klaytn Mainnet
-Code : `contracts/KApmNftCoin.sol`  
-Mainnet :  
+Code : `contracts/KApmCoin.sol`  
+Mainnet : 0x4ec5e1c092f9c40d1e9be5744feddb23935232e9
 
 
 ## KIP-37 NFT Voucher
 * KIP37 standard NFT Voucher with on-chain metadata that can be transmitted to off-chain services.
 Code : `contracts/KApmNftVoucher.sol`  
-Mainnet:  
+Mainnet: 0xb98efc3e0899ba4e2f074317f45b9f8b9bcf7be0
 
 
 **Creating & Minting New Voucher type**
@@ -55,7 +55,7 @@ Mainnet:
 
 **sale**
 (Deprecated)KApmNftVoucherSale : 임직원 세일에 사용
-KApmNftVoucherLimitSale : VIP세일에 사용
+KApmNftVoucherLimitSale : 화이트리스트 한정 세일에 사용
 1.
 
 1. `setStep(uint256)`
