@@ -34,10 +34,13 @@ const config: HardhatUserConfig = {
     }
   },
   networks: {
+    klaytn: {
+      url: "https://public-node-api.klaytnapi.com/v1/cypress",
+      accounts: [process.env.PK || ""]        
+    },
     baobab: {
-      url: process.env.ROPSTEN_URL || "",
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      url: "https://public-node-api.klaytnapi.com/v1/baobab",
+      accounts: [process.env.TEST_PK || ""]        
     },
   },
   gasReporter: {
