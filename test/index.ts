@@ -3,14 +3,15 @@ import { BigNumber } from "ethers";
 import { ethers, waffle } from "hardhat";
 
 describe("Contract", function () {
-  it("NFT Voucher Test", async function () {
+  it("WL 판매 테스트", async function () {
     const provider = waffle.provider;
     
-    const [owner, vip, fomotech] = provider.getWallets();
+    const [owner, wl1, wl2, fomotech] = provider.getWallets();
     const ipfsEndpoint = "https://mock-endpoint/metadata/"
     
+    //--- 초기화 시작 ----
     //계약 객체 생성
-    const SaleForVip = await ethers.getContractFactory("KApmNftVoucherLimitSale");
+    const SaleForWL = await ethers.getContractFactory("KApmNftVoucherLimitSale");
     const APM = await ethers.getContractFactory("KApmCoin");
     const NFT = await ethers.getContractFactory("KApmNftVoucher");
     
@@ -18,39 +19,54 @@ describe("Contract", function () {
     const apm = await APM.deploy()
     await apm.deployed()
 
-    //vip 주소로 APM 지급
-    await apm.mint(vip.address, "10000000000000000000000000");
+    //WL 주소로 APM 지급
+    await apm.mint(wl1.address, "10000000000000000000000000");
 
-    //KIP-37 바우처 배포
+    //KIP-37 NFT 바우처 배포
     const nft = await NFT.deploy("ipfsEndpoint");
     await nft.deployed();
 
-    //VIP세일 배포
-    const saleForVip = await SaleForVip.deploy(
+    //--- 초기화 종료 ----
+    //--- 세일 테스트 시작 ---
+
+    const TEST_NFT_VOUCHER_ID = 15; //Dev서버 화리 테스트용 상품권
+
+    //WL판매용 바우처 생성 (컨트렉트 레벨에서는 Event, 전자 타입을 구분하지 않는다.)
+    let createVoucherTypeTx = await nft.create(
+      TEST_NFT_VOUCHER_ID, 
+      10000, //초기발행량
+      ipfsEndpoint
+      );
+    await createVoucherTypeTx.wait();
+
+    //WL 판매용 바우처 디테일 설정
+    let updateVoucherDetailTx = await nft.setVoucherDetail(
+      TEST_NFT_VOUCHER_ID,
+      "apM Members NFT e-Voucher",
+      "apM Members NFT e-Vouchers can be 'Unwrapped' to the apM Event e-Voucher on the FOMO Tech web through apM Members App.\n\n\n\n"
+       + "Expiration Date : 5 years.\n\n"
+       + "Transfer and refunds are not possible after Unwrapping",
+      TEST_NFT_VOUCHER_ID, 
+      1830265199, //Fri Dec 31 2027 23:59:59 GMT+0900
+      true
+      ); 
+    await updateVoucherDetailTx.wait();
+
+    //화이트리스트 세일 배포 
+    const saleForWL = await SaleForWL.deploy(
       apm.address,
       nft.address,
       fomotech.address,
-      2,
+      TEST_NFT_VOUCHER_ID,
       10000,
-      "VIP 세일 제목",
-      "VIP 세일 상세\n\nVIP 세일 상세 한줄더"
+      "Whitelist sale of NFT e-Voucher.",
+      "Individual purchase limit may be granted through offline KYC, please contact fomotech@apm-coin.com\n\nIt is possible to swap to the apM Event e-Voucher with a validity period of 5 years on the FOMO Tech page in apM Members. Gifts and refunds are not possible after swap.\n\nWrapped by FOMO Tech"
       );
-    await saleForVip.deployed();
+    await saleForWL.deployed();
 
-    //오픈 이벤트 바우처 생성 (for staff & vip)
-    let createTx = await nft.create(2, 0, ipfsEndpoint);
-    await createTx.wait();
+  
 
-    //바우처 디테일 설정
-    let setVoucherTx = await nft.setVoucherDetail(
-      2, //token id
-      "apM Open Event Voucher",
-      "apM Members 서비스 오픈 기념 NFT Voucher\n\nWrapped by FOMO Tech",
-      2,
-      1753922800, //22.06.30 UTC9 23:59:59
-      true
-      ); 
-    await setVoucherTx.wait();
+
 
     //세일 계약이 민터 권한이 없는지 확인
     expect(await nft.isMinter(saleForVip.address)).to.be.equal(false);
