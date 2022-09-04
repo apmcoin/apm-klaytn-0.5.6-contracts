@@ -22,7 +22,7 @@ contract KApmNftVoucherLimitSale is Ownable, StaffRole, ManagerRole, IKApmNftVou
     INftVoucher public nftVoucher;
     address public feeTo;
     uint256 public tokenId;
-    uint256 public apmPerNft = 25 * 1e18;
+    uint256 public apmPerNft = 67 * 1e18;
     uint256 public step = 0;
     uint256 public saleLimit = 0;
     uint256 public saleCount = 0;
