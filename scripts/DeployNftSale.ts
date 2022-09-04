@@ -22,7 +22,10 @@ async function main() {
   await sale.deployed();
   console.log("Sale deployed to:", sale.address);
   
-  //After deploy, add minter role to deployed sale contract
+  //After deploy, 
+  // 1. add minter role to deployed sale contract
+  // 2. Create & setVoucherDetail nft contract
+ 
   //After sale, remove role!
 }
 
