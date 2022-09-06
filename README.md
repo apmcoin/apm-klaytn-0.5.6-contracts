@@ -40,7 +40,7 @@ Mainnet: 0xb98efc3e0899ba4e2f074317f45b9f8b9bcf7be0
         "apM Members Welcome Voucher",    //name
         "Desc~\n\n\nWrapped by FOMO Tech Limited.", //description
         "2",                //voucherFormatId
-        1653922800,         //expireAt
+        1830297599,         //expireAt 2027.12.31 23:59:59 KST
         true                //redeemAvailable
     );
       
