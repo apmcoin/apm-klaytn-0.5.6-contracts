@@ -25,7 +25,9 @@ export interface KApmNftVoucherLimitSaleInterface extends utils.Interface {
     "tokenId()": FunctionFragment;
     "setUsingWhitelist(bool)": FunctionFragment;
     "removeWhitelist(address[])": FunctionFragment;
+    "renounceStaff()": FunctionFragment;
     "addManager(address)": FunctionFragment;
+    "addStaff(address)": FunctionFragment;
     "saleDescription()": FunctionFragment;
     "setApmCoin(address)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
@@ -44,6 +46,7 @@ export interface KApmNftVoucherLimitSaleInterface extends utils.Interface {
     "setNftVoucher(address)": FunctionFragment;
     "isWhitelist(address)": FunctionFragment;
     "setTokenId(uint256)": FunctionFragment;
+    "isStaff(address)": FunctionFragment;
     "setApmPerNft(uint256)": FunctionFragment;
     "apmCoin()": FunctionFragment;
     "buy(uint256,uint256)": FunctionFragment;
@@ -77,7 +80,12 @@ export interface KApmNftVoucherLimitSaleInterface extends utils.Interface {
     functionFragment: "removeWhitelist",
     values: [string[]]
   ): string;
+  encodeFunctionData(
+    functionFragment: "renounceStaff",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "addManager", values: [string]): string;
+  encodeFunctionData(functionFragment: "addStaff", values: [string]): string;
   encodeFunctionData(
     functionFragment: "saleDescription",
     values?: undefined
@@ -123,6 +131,7 @@ export interface KApmNftVoucherLimitSaleInterface extends utils.Interface {
     functionFragment: "setTokenId",
     values: [BigNumberish]
   ): string;
+  encodeFunctionData(functionFragment: "isStaff", values: [string]): string;
   encodeFunctionData(
     functionFragment: "setApmPerNft",
     values: [BigNumberish]
@@ -179,7 +188,12 @@ export interface KApmNftVoucherLimitSaleInterface extends utils.Interface {
     functionFragment: "removeWhitelist",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "renounceStaff",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "addManager", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "addStaff", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "saleDescription",
     data: BytesLike
@@ -228,6 +242,7 @@ export interface KApmNftVoucherLimitSaleInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "setTokenId", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "isStaff", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "setApmPerNft",
     data: BytesLike
@@ -276,6 +291,8 @@ export interface KApmNftVoucherLimitSaleInterface extends utils.Interface {
     "SetUsingWhitelist(bool)": EventFragment;
     "ManagerAdded(address)": EventFragment;
     "ManagerRemoved(address)": EventFragment;
+    "StaffAdded(address)": EventFragment;
+    "StaffRemoved(address)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
   };
 
@@ -291,6 +308,8 @@ export interface KApmNftVoucherLimitSaleInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "SetUsingWhitelist"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ManagerAdded"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ManagerRemoved"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "StaffAdded"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "StaffRemoved"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
 }
 
@@ -356,6 +375,14 @@ export type ManagerRemovedEvent = TypedEvent<[string], { account: string }>;
 
 export type ManagerRemovedEventFilter = TypedEventFilter<ManagerRemovedEvent>;
 
+export type StaffAddedEvent = TypedEvent<[string], { account: string }>;
+
+export type StaffAddedEventFilter = TypedEventFilter<StaffAddedEvent>;
+
+export type StaffRemovedEvent = TypedEvent<[string], { account: string }>;
+
+export type StaffRemovedEventFilter = TypedEventFilter<StaffRemovedEvent>;
+
 export type OwnershipTransferredEvent = TypedEvent<
   [string, string],
   { previousOwner: string; newOwner: string }
@@ -412,7 +439,16 @@ export interface KApmNftVoucherLimitSale extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    renounceStaff(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     addManager(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    addStaff(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -485,6 +521,8 @@ export interface KApmNftVoucherLimitSale extends BaseContract {
       _tokenId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    isStaff(account: string, overrides?: CallOverrides): Promise<[boolean]>;
 
     setApmPerNft(
       _apmPerNft: BigNumberish,
@@ -568,7 +606,16 @@ export interface KApmNftVoucherLimitSale extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  renounceStaff(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   addManager(
+    account: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  addStaff(
     account: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -641,6 +688,8 @@ export interface KApmNftVoucherLimitSale extends BaseContract {
     _tokenId: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  isStaff(account: string, overrides?: CallOverrides): Promise<boolean>;
 
   setApmPerNft(
     _apmPerNft: BigNumberish,
@@ -724,7 +773,11 @@ export interface KApmNftVoucherLimitSale extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    renounceStaff(overrides?: CallOverrides): Promise<void>;
+
     addManager(account: string, overrides?: CallOverrides): Promise<void>;
+
+    addStaff(account: string, overrides?: CallOverrides): Promise<void>;
 
     saleDescription(overrides?: CallOverrides): Promise<string>;
 
@@ -786,6 +839,8 @@ export interface KApmNftVoucherLimitSale extends BaseContract {
       _tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    isStaff(account: string, overrides?: CallOverrides): Promise<boolean>;
 
     setApmPerNft(
       _apmPerNft: BigNumberish,
@@ -884,6 +939,12 @@ export interface KApmNftVoucherLimitSale extends BaseContract {
     ): ManagerRemovedEventFilter;
     ManagerRemoved(account?: string | null): ManagerRemovedEventFilter;
 
+    "StaffAdded(address)"(account?: string | null): StaffAddedEventFilter;
+    StaffAdded(account?: string | null): StaffAddedEventFilter;
+
+    "StaffRemoved(address)"(account?: string | null): StaffRemovedEventFilter;
+    StaffRemoved(account?: string | null): StaffRemovedEventFilter;
+
     "OwnershipTransferred(address,address)"(
       previousOwner?: string | null,
       newOwner?: string | null
@@ -916,7 +977,16 @@ export interface KApmNftVoucherLimitSale extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    renounceStaff(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     addManager(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    addStaff(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -989,6 +1059,8 @@ export interface KApmNftVoucherLimitSale extends BaseContract {
       _tokenId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    isStaff(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     setApmPerNft(
       _apmPerNft: BigNumberish,
@@ -1073,7 +1145,16 @@ export interface KApmNftVoucherLimitSale extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    renounceStaff(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     addManager(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    addStaff(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
@@ -1148,6 +1229,11 @@ export interface KApmNftVoucherLimitSale extends BaseContract {
     setTokenId(
       _tokenId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    isStaff(
+      account: string,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     setApmPerNft(

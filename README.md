@@ -66,3 +66,9 @@ KApmNftVoucherLimitSale : 화이트리스트 한정 세일에 사용
 3. SetBuyLimitPerNft
 
 
+### script
+```
+npx hardhat run .\scripts\DeployNftSale.ts --network baobab
+```
+
+

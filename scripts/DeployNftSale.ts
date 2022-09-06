@@ -8,23 +8,26 @@ const testNftVoucher = '0xc979Ebf3359EBCbD7925Be23320208925Cc6f71d';
 const tokenAndVoucherId = 15;
 
 async function main() {
-
+  
   //const salePrice = parseUnits("1.0", "ether")
   const Sale = await ethers.getContractFactory("KApmNftVoucherLimitSale");
   const sale = await Sale.deploy(
       testBPM, //payable token
       testNftVoucher, //saled NFT Voucher
       testVault, //payable FeeTo
+      10000,//saleLimit
       tokenAndVoucherId, //token id == voucher format id
       "Regular sales of bpM NFT e-Vouchers",
-      "BpM NFT e-Vouchers can be 'Unwrapped' to the apM Event e-Voucher on the FOMO Tech web via apM Members App.\n\napM Event e-Voucher is can freely redeem e-Voucher like cash at the three apM shopping malls.\n\n\n\nExpiration Date : 5 years.\n\nTransfer and refunds are not possible after when e-Vouchers are unwrapped.\n\n\n\nWrapped by FOMO Tech Limited."
+      "bpM sale desc\n\nBpM NFT e-Vouchers can be 'Unwrapped' to the apM Event e-Voucher on the FOMO Tech web via apM Members App.\n\napM Event e-Voucher is can freely redeem e-Voucher like cash at the three apM shopping malls.\n\n\n\nExpiration Date : 5 years.\n\nTransfer and refunds are not possible after when e-Vouchers are unwrapped.\n\n\n\nWrapped by FOMO Tech Limited."
     );
   await sale.deployed();
   console.log("Sale deployed to:", sale.address);
+
+  //Mainnet todo : ADD Transfer Owner role to HW Wallet
   
   //After deploy, 
   // 1. add minter role to deployed sale contract
-  // 2. Create & setVoucherDetail nft contract
+  // 2. Create & setVoucherDetail on nft contract
  
   //After sale, remove role!
 }

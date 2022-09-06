@@ -83,6 +83,7 @@ export type { KIP7Token } from "./KIP7Token";
 export type { KIP7TokenFull } from "./KIP7TokenFull";
 export type { SampleNFT } from "./SampleNFT";
 export type { ManagerRole } from "./ManagerRole";
+export type { StaffRole } from "./StaffRole";
 
 export { BatchRedeemVoucher__factory } from "./factories/BatchRedeemVoucher__factory";
 export { IKApmCoin__factory } from "./factories/IKApmCoin__factory";
@@ -166,3 +167,4 @@ export { KIP7Token__factory } from "./factories/KIP7Token__factory";
 export { KIP7TokenFull__factory } from "./factories/KIP7TokenFull__factory";
 export { SampleNFT__factory } from "./factories/SampleNFT__factory";
 export { ManagerRole__factory } from "./factories/ManagerRole__factory";
+export { StaffRole__factory } from "./factories/StaffRole__factory";

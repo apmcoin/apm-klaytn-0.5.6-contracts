@@ -340,6 +340,10 @@ declare module "hardhat/types/runtime" {
       name: "ManagerRole",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ManagerRole__factory>;
+    getContractFactory(
+      name: "StaffRole",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.StaffRole__factory>;
 
     getContractAt(
       name: "BatchRedeemVoucher",
@@ -751,6 +755,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ManagerRole>;
+    getContractAt(
+      name: "StaffRole",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.StaffRole>;
 
     // default types
     getContractFactory(
