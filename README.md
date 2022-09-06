@@ -68,7 +68,7 @@ KApmNftVoucherLimitSale : 화이트리스트 한정 세일에 사용
 
 ### script
 ```
-npx hardhat run .\scripts\DeployNftSale.ts --network baobab
+npx hardhat run .\scripts\DeployNftSale.ts --network klaytn
 ```
 
 

@@ -8,7 +8,7 @@ const testNftVoucher = '0xc979Ebf3359EBCbD7925Be23320208925Cc6f71d';
 const tokenAndVoucherId = 15;
 
 async function main() {
-  
+  //DO ON CRYPRESS
   //const salePrice = parseUnits("1.0", "ether")
   const Sale = await ethers.getContractFactory("KApmNftVoucherLimitSale");
   const sale = await Sale.deploy(
@@ -23,7 +23,7 @@ async function main() {
   await sale.deployed();
   console.log("Sale deployed to:", sale.address);
 
-  //Mainnet todo : ADD Transfer Owner role to HW Wallet
+  //Mainnet APM todo : ADD Transfer Owner role to HW Wallet
   
   //After deploy, 
   // 1. add minter role to deployed sale contract
