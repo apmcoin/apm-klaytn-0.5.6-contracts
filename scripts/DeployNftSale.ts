@@ -15,8 +15,8 @@ async function main() {
       testBPM, //payable token
       testNftVoucher, //saled NFT Voucher
       testVault, //payable FeeTo
-      10000,//saleLimit
       tokenAndVoucherId, //token id == voucher format id
+      10000,//saleLimit
       "Regular sales of bpM NFT e-Vouchers",
       "bpM sale desc\n\nBpM NFT e-Vouchers can be 'Unwrapped' to the apM Event e-Voucher on the FOMO Tech web via apM Members App.\n\napM Event e-Voucher is can freely redeem e-Voucher like cash at the three apM shopping malls.\n\n\n\nExpiration Date : 5 years.\n\nTransfer and refunds are not possible after when e-Vouchers are unwrapped.\n\n\n\nWrapped by FOMO Tech Limited."
     );
