@@ -1,5 +1,5 @@
-# apm-klaytn-0.5.6-contracts
-apM Klaytn contracts
+# apm-constantinople-contracts
+apM Contracts for Constantinople EVM
 
 ## Environment
 * solc 0.5.6
